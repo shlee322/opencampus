@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 # Copyright (C) 2015 opencampus.kr
-from mongoengine import Q
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -13,6 +13,8 @@ from mongoengine import Q
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from mongoengine import Q
 
 MODULE_NAMES = [
     'opencampus.common.db',
