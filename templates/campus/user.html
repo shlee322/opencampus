@@ -1,0 +1,71 @@
+{% if not session.get_account() %}
+<div class="modal fade" id="user-profile-modal" tabindex="-1" role="dialog" aria-labelledby="user-profile-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div id="user-modal-content" class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="user-profile-modal-label">로그인</h3>
+      </div>
+        <form onsubmit="return submit_login()">
+            <div class="modal-body">
+              <div class="input-group input-group-lg">
+                  <span class="input-group-addon">
+                      <i class="fa fa-user"></i>
+                  </span>
+                  <input id="account_id" type="text" class="form-control" placeholder="아이디">
+              </div>
+              <div class="input-group input-group-lg">
+                  <span class="input-group-addon">
+                      <i class="fa fa-lock"></i>
+                  </span>
+                  <input id="account_pw" type="password" class="form-control" placeholder="비밀번호">
+              </div>
+                <div class="container">
+                    <a class="btn btn-link" href="{{ url_for('campus.account_find') }}">비밀번호가 기억나지 않습니까?</a>
+                </div>
+            </div>
+            <div id="login_error" class="alert alert-warning" role="alert" style="display:none;"></div>
+            <div class="modal-footer">
+                <a href="{{ url_for('campus.account_join') }}" role="button" class="btn btn-default btn-lg">회원가입</a>
+                <button type="submit" class="btn btn-primary btn-lg">로그인</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    function submit_login() {
+        if($('#account_id').val() == '') {
+            $('#login_error').html('아이디를 입력해주세요');
+            $('#login_error').show();
+            return false;
+        }
+
+        if($('#account_pw').val() == '') {
+            $('#login_error').html('비밀번호를 입력해주세요');
+            $('#login_error').show();
+            return false;
+        }
+
+        $.post('{{ url_for('campus.account_login') }}', {
+            csrf_token: '{{ csrf_token() }}',
+            account_id: $('#account_id').val(),
+            account_pw: $('#account_pw').val()
+        }, function() {
+            document.location.href = '/';
+        }).fail(function(err) {
+            var res = $.parseJSON(err.responseText);
+            if(res.error.code == 'account_not_found') {
+                $('#login_error').html('아이디가 존재하지 않습니다');
+            } else if(res.error.code == 'does_not_match_password') {
+                $('#login_error').html('비밀번호가 일치하지 않습니다');
+            } else {
+                $('#login_error').html('알 수 없는 에러가 발생하였습니다');
+            }
+            $('#login_error').show();
+        });
+
+        return false;
+    }
+</script>
+{% endif %}

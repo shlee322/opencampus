@@ -1,0 +1,20 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='campus/css/lecture/detail/admin.css', version=1) }}">
+{% endblock %}
+{% block detail_content %}
+    <div class="row">
+        <div class="col-sm-2 col-md-2">
+            <div class="list-group">
+                <a href="{{ url_for('campus.lecture_admin_board', year=year, term=term, code=code) }}" class="list-group-item{% if request.endpoint.startswith('lecture_admin_board') %} active{% endif %}"><h4>게시판</h4></a>
+                <!--<a href="{{ url_for('campus.lecture_admin_grade', year=year, term=term, code=code) }}" class="list-group-item{% if request.endpoint.startswith('lecture_admin_grade') %} active{% endif %}"><h4>성적</h4></a>!-->
+                <a href="{{ url_for('campus.lecture_admin_administrators', year=year, term=term, code=code) }}" class="list-group-item{% if request.endpoint.startswith('lecture_admin_administrators') %} active{% endif %}"><h4>관리자</h4></a>
+            </div>
+        </div>
+        <div class="col-sm-10 col-md-10">
+            {% block admin_content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

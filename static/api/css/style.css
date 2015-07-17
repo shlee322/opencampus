@@ -1,0 +1,33 @@
+#main-content {
+  padding-top: 70px;
+  width: 100%;
+  min-width: 1000px;
+  min-height: 100%;
+  margin-bottom: -160px;
+  text-align: center;
+}
+#main-content:after {
+  content: "";
+  display: block;
+  height: 160px;
+}
+.btn {
+  display: block;
+  margin-top: 5%;
+  width: 50%;
+  float: left;
+  margin-left: 25%;
+}
+.btn-panel {
+  color: #333;
+}
+.btn-panel:hover,
+.btn-panel:focus {
+  text-decoration: none;
+  color: #333;
+}
+.opencampus-footer {
+  background-color: #f8d7c3;
+  height: 160px;
+  width: 100%;
+}

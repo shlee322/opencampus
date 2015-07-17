@@ -1,0 +1,99 @@
+{% extends 'module/lecture/detail/admin/layout.html' %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript">
+    $('#new_board').click(function() {
+        $("#board_list").append("<option value=''>새 게시판</option>");
+    });
+
+    $('#remove_board').click(function() {
+        if($("#board_list option:selected").val() == '') {
+            $("#board_list option:selected").remove();
+            return;
+        }
+
+        if(!$("#board_list option:selected").val()) return;
+
+        //ajax remove
+    });
+
+    $("#board_list").change(function() {
+        if($("#board_list option:selected").val() == '') {
+            $('#board_id').val('');
+            $('#board_id').attr("readonly", false);
+            $('#board_name').val('');
+            $('#read_perm option[value=0]').prop('selected', true);
+            $('#write_perm option[value=0]').prop('selected', true);
+            return;
+        }
+
+        $('#board_id').val($("#board_list option:selected").data('board-id'));
+        $('#board_id').attr("readonly", true);
+        $('#board_name').val($("#board_list option:selected").text());
+
+    });
+
+    $('#board_save').click(function() {
+        $.post('{{ url_for('campus.lecture_admin_board_create', year=year, term=term, code=code) }}', {
+            'csrf_token': '{{ csrf_token() }}',
+            'board_id': $('#board_id').val(),
+            'board_name': $('#board_name').val(),
+            'read_perm': $('#read_perm').find('option:selected').data('perm'),
+            'write_perm': $('#write_perm').find('option:selected').data('perm')
+        });
+    })
+
+    </script>
+{% endblock %}
+{% block admin_content %}
+    <div id="board_manager" class="lecture-admin-page">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>게시판 관리</h4>
+                <select class="form-control" id="board_list" multiple>
+                    {% for board in boards %}
+                        <option data-board-id="{{ board.board_id }}">{{ board.board_name }}</option>
+                    {% endfor %}
+                </select>
+                <button id="new_board" class="btn btn-default btn-sm">&plus;</button>
+                <button id="remove_board" class="btn btn-default btn-sm">&minus;</button>
+                <button class="btn btn-default btn-sm">&#9650;</button>
+                <button class="btn btn-default btn-sm">&#9660;</button>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">게시판 세부사항</div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="menu_name">게시판 ID</label>
+                                <input type="text" class="form-control" id="board_id" placeholder="소문자, 숫자, - 조합 (ID는 한번 지정하면 수정하실 수 없습니다)">
+                            </div>
+                            <div class="form-group">
+                                <label for="menu_name">게시판 이름</label>
+                                <input type="text" class="form-control" id="board_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="menu_name">읽기 권한</label>
+                                <select class="selectpicker" id="read_perm">
+                                    <option data-perm="0">전체 허용</option>
+                                    <option data-perm="1">관리자 + 학생</option>
+                                    <option data-perm="2">관리자만</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="menu_name">쓰기 권한</label>
+                                <select class="selectpicker" id="write_perm">
+                                    <option data-perm="0">전체 허용</option>
+                                    <option data-perm="1">관리자 + 학생</option>
+                                    <option data-perm="2">관리자만</option>
+                                </select>
+                            </div>
+                            <button id="board_save" type="button" class="btn btn-primary">저장</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

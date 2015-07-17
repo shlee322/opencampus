@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-md-4">
+            <img src="{{ url_for('static', filename='img/logo_imgonly.png', version=1) }}"
+             alt="OpenCampus Logo" width="110" height="80" style="margin-top: 10px;">
+        </div>
+        <div id="footer-sites" class="col-sm-4 col-md-4">
+            <h4>Site</h4>
+            <p><a class="footer-link" href="http://opencampus.kr">오픈캠퍼스</a></p>
+            <p><a class="footer-link" href="https://developers.opencampus.kr" target="_blank">개발자 사이트</a></p>
+            <p><a class="footer-link" href="http://opencampus.kr/policy">이용약관 & 개인정보취급방침</a></p>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <h4>Open Campus</h4>
+            <h1>
+                <a class="footer-link" href="https://github.com/shlee322/opencampus"><i class="fa fa-github"></i></a>
+                &nbsp;&nbsp;&nbsp;
+                <a class="footer-link" href="https://goto.kakao.com/iodxfref">
+                    <img src="{{ url_for('static', filename='img/kakao.png', version=1) }}" style="width:40px;height:40px;margin-bottom:8px">
+                </a>
+            </h1>
+            <p>Code licensed under <a class="footer-link" href="https://github.com/shlee322/opencampus/blob/master/LICENSE">AGPL
+                License</a>, Copyright&copy 2015 opencampus.kr All rights reserved.</p>
+        </div>
+    </div>
+</div>

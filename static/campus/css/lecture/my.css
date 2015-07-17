@@ -1,0 +1,52 @@
+.top-menu-content {
+  margin-bottom: 15px;
+}
+.top-menu-content * {
+  display: inline;
+}
+.top-menu-content h4 {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.semester-panel {
+  width: 90%;
+  min-width: 700px;
+}
+.lecture-card {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 0;
+  width: 20%;
+  min-width: 230px;
+  max-width: 270px;
+  vertical-align: top;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+}
+.lecture-card:focus,
+.lecture-card:hover {
+  text-decoration: none;
+  color: #333;
+}
+.lecture-card .panel-body {
+  margin: 0;
+  padding: 0;
+}
+.lecture-card .panel-body h3 {
+  font-weight: 600;
+}
+.lecture-card .panel-footer {
+  margin: 0;
+  padding: 7px;
+  background-color: white !important;
+}
+.lecture-card .panel-footer * {
+  display: inline;
+}
+.lecture-card .panel-footer p,
+.lecture-card .panel-footer abbr {
+  background-color: #ddd;
+  padding: 3px;
+}

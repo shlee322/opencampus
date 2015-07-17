@@ -1,0 +1,157 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css', version=1) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='bower_components/summernote/dist/summernote.css', version=1) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='bower_components/blueimp-file-upload/css/jquery.fileupload.css', version=1) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='bower_components/blueimp-file-upload/css/jquery.fileupload-ui.css', version=1) }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail/board.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.jss', version=2) }}"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-load-image/js/load-image.all.min.js', version=2) }}"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.min.js', version=2) }}"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.iframe-transport.js', version=2) }}"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload.js', version=2) }}"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload-process.js', version=2) }}"></script>
+    <!-- The File Upload image preview & resize plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload-image.js', version=2) }}"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload-audio.js', version=2) }}"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload-video.js', version=2) }}"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="{{ url_for('static', filename='bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js', version=2) }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/summernote/dist/summernote.min.js', version=1) }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#summernote').summernote({
+                height: 300
+            });
+
+            $('#fileupload').fileupload({
+                url: "파일업로드 URL 입력"
+            });
+        });
+
+        var uploadFile = function() {
+            $('#fileupload').addClass('fileupload-processing');
+
+            $.ajax({
+                url: $('#fileupload').fileupload('option', 'url'),
+                dataType: 'json',
+                context: $('#fileupload')[0]
+            }).always(function () {
+                $(this).removeClass('fileupload-processing');
+            }).done(function (result) {
+                $(this).fileupload('option', 'done')
+                        .call(this, $.Event('done'), {result:result});
+            });
+        };
+    </script>
+{% endblock %}
+
+{% block detail_content %}
+    <div class="panel panel-default article-box">
+        <div class="panel-body">
+            <h3>새 글쓰기</h3>
+            <hr>
+            <div class="input-group">
+                <span class="input-group-addon">제목</span>
+                <input type="text" class="form-control">
+            </div>
+            <div id="summernote">test</div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="fileupload" onSubmit="uploadFile()" method="POST"
+                          enctype="multipart/form-data">
+                        {{ csrf_token() | safe }}
+                        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                        <noscript><input type="hidden" name="redirect"
+                                         value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <div class="row fileupload-buttonbar">
+                            <div class="col-lg-7">
+                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Add files...</span>
+                                    <input type="file" name="files[]" multiple>
+                                </span>
+                                <button type="submit" class="btn btn-primary start">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Start upload</span>
+                                </button>
+                                <button type="reset" class="btn btn-warning cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel upload</span>
+                                </button>
+                                <button type="button" class="btn btn-danger delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                                <input type="checkbox" class="toggle">
+                                <!-- The global file processing state -->
+                                <span class="fileupload-process"></span>
+                            </div>
+                            <!-- The global progress state -->
+                            <div class="col-lg-5 fileupload-progress fade">
+                                <!-- The global progress bar -->
+                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                </div>
+                                <!-- The extended global progress state -->
+                                <div class="progress-extended">&nbsp;</div>
+                            </div>
+                        </div>
+                        <!-- The table listing the files available for upload/download -->
+                        <table role="presentation" class="table table-striped">
+                            <tbody class="files"></tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>과제 제출 기한?</h3>
+
+                    <div class="form-group">
+                        <div class='input-group date' id='homework_deadlinepicker'>
+                            <input type='text' class="form-control"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#homework_deadlinepicker').datetimepicker();
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="btn-group btn-group-lg" style="position:relative;top:0;left:50%;margin-left:-15%">
+                <button class="btn btn-primary btn-lg">등록</button>
+                <button class="btn btn-default btn-lg">취소</button>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

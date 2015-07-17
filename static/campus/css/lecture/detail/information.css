@@ -1,0 +1,40 @@
+#lecture_info_table {
+  width: 100%;
+  font-size: 110%;
+}
+#lecture_info_table .lecture-info-key {
+  width: 30%;
+  text-align: center;
+}
+.information-row {
+  margin-bottom: 30px;
+}
+.recent-article {
+  width: 80%;
+}
+.lecture-list {
+  width: 60%;
+}
+.lecture-list .list-group-item {
+  padding: 5px;
+}
+.lecture-list .list-group-item * {
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+.lecture-list .list-group-item h5 {
+  margin: 0 0 0 20px;
+}
+.lecture-list .list-group-item h3 {
+  margin: 0 10% 0 30px;
+}
+.lecture-list .list-group-item .lecture-additional-info {
+  float: right;
+  margin: 0 15px 0 0;
+}
+.lecture-list .list-group-item .lecture-additional-info h5 {
+  padding: 5px;
+  background-color: #ccc;
+}

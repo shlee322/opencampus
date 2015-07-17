@@ -1,0 +1,163 @@
+{% extends "developer/console/campus/layout.html" %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='developer/console/nestable.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/nestable/jquery.nestable.js', version=1) }}"></script>
+    <script type="text/javascript">
+        $('#nestable').nestable({
+            group: 1,
+            maxDepth: 2
+        });
+    </script>
+    <script type="text/javascript">
+        $('#menu_page').change(function () {
+            $('#menu_url').toggle($("#menu_page").val() == '');
+        });
+
+        var edit_obj = null;
+
+        function view_edit(a) {
+            edit_obj = $(a).parent().parent();
+            var data = JSON.parse(decodeURIComponent(edit_obj.data('id')));
+            $('#menu_name').val(data.name);
+            if(data.type == 'uri') {
+                $("#menu_page").val('');
+                $('#menu_url').val(data.uri);
+            } else if(data.type == 'module') {
+                $("#menu_page").val(data.module);
+                $('#menu_url').val('');
+            }
+
+            $('#menu_page').change();
+        }
+
+        function get_edit_data() {
+            var data = {
+                'name': $('#menu_name').val(),
+                'type': $("#menu_page").val() == '' ? 'uri' : 'module'
+            };
+            if(data.type == 'uri') {
+                data.uri = $('#menu_url').val();
+            } else if(data.type == 'module') {
+                data.module = $("#menu_page").val();
+            }
+
+            return data;
+        }
+
+        $('#menu_save').click(function() {
+            if(!edit_obj) return;
+            var data = get_edit_data();
+            edit_obj.data('id', encodeURIComponent(JSON.stringify(data)));
+            edit_obj.children('.dd3-content').children('a').html(data.name);
+        });
+
+        $('#menu_add').click(function() {
+            var data = get_edit_data();
+
+            var html = '<li class="dd-item" data-id="' + encodeURIComponent(JSON.stringify(data)) + '">';
+            html += '<div class="dd-handle dd3-handle">Drag</div>';
+            html += '<div class="dd3-content">';
+            html += '<a role="button" onclick="view_edit(this)">' + $('#menu_name').val() + '</a>';
+            html += '</div>';
+            html += '</li>';
+
+            $('#menu_list').append(html);
+        });
+
+        $('#menu_remove').click(function() {
+            if(!edit_obj) return;
+            edit_obj.remove();
+        });
+
+        function menu_serialize(data) {
+            var d = JSON.parse(decodeURIComponent(data.id));
+            d.children = [];
+            if(data.children) {
+                for(var i=0; i<data.children.length; i++) {
+                    d.children.push(menu_serialize(data.children[i]));
+                }
+            }
+
+            return d;
+        }
+
+        $('#save').click(function() {
+            var menus = [];
+            var o = $('#nestable').nestable('serialize');
+            for(var i=0; i< o.length; i++) {
+                menus.push(menu_serialize(o[i]));
+            }
+
+            var data = {
+                'csrf_token': '{{ csrf_token() }}',
+                'menus': JSON.stringify(menus)
+            };
+
+            $.post("{{ url_for('console.campus_menus', campus_id=campus.id) }}", data, function () {
+            });
+        });
+    </script>
+{% endblock %}
+{% block cm_content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-right"><button id="save" type="button" class="btn btn-default">저장</button></div>
+            <div class="dd" id="nestable">
+                <ol class="dd-list" id="menu_list">
+                    {% for menu in request.campus.get_menus() %}
+                        <li class="dd-item" data-id="{{ encode_menu(menu) }}">
+                            <div class="dd-handle dd3-handle">Drag</div>
+                            <div class="dd3-content">
+                                <a role="button" onclick="view_edit(this)">{{ menu.name }}</a>
+                            </div>
+                            {% if menu.children | length > 0 %}
+                            <ol class="dd-list">
+                                {% for submenu in menu.children %}
+                                    <li class="dd-item" data-id="{{ encode_menu(submenu) }}">
+                                        <div class="dd-handle dd3-handle">Drag</div>
+                                        <div class="dd3-content">
+                                            <a role="button" onclick="view_edit(this)">{{ submenu.name }}</a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">메뉴 수정</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="menu_name">메뉴 이름</label>
+                            <input type="text" class="form-control" id="menu_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="menu_name">페이지</label>
+                            <select class="form-control" id="menu_page">
+                                <option value="">URL</option>
+                                {% for menu in campus_service_menus %}
+                                    <option value="{{ menu.endpoint }}">{{ menu.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="url" class="form-control" id="menu_url" placeholder="원하시는 URL을 입력해주세요">
+                        </div>
+                        <button id="menu_save" type="button" class="btn btn-primary">저장</button>
+                        <button id="menu_add" type="button" class="btn btn-default">추가</button>
+                        <button id="menu_remove" type="button" class="btn btn-danger">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

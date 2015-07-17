@@ -1,0 +1,44 @@
+<div class="main-sidebar">
+    <ul class="nav nav-pills nav-stacked">
+        {% for menu in request.campus.get_menus() %}
+            <li role="presentation">
+                {% if menu.children | length > 0 %}
+                    <a role="button" onclick="showSubSidebar(this)">{{ menu.name }}</a>
+                {% else %}
+                    {% if menu.type == 'uri' %}
+                        <a href="{{ menu.uri }}">{{ menu.name }}</a>
+                    {% else %}
+                        <a href="{{ url_for('campus.'+menu.module) }}">{{ menu.name }}</a>
+                    {% endif %}
+                {% endif %}
+            </li>
+            {% if menu.children | length > 0 %}
+                <div class="sub-sidebar hidden">
+                    <ul class="nav nav-pills nav-stacked">
+                        {% for submenu in menu.children %}
+                            <li role="presentation">
+                                {% if submenu.type == 'uri' %}
+                                    <a href="{{ submenu.uri }}">{{ submenu.name }}</a>
+                                {% else %}
+                                    <a href="{{ url_for('campus.'+submenu.module) }}">{{ submenu.name }}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul class="nav nav-pills nav-stacked visible-xs">
+        {% if not session.get_account() %}
+            <li role="presentation"><a href="javascript:showUserMenu()">로그인</a></li>
+        {% else %}
+            <li role="presentation"><a href="javascript:showUserMenu()">{{ session.get_account().nickname }}</a></li>
+            <div id="user_menu_mobile" class="nav nav-pills nav-stacked navbar-right sub-sidebar hidden">
+
+                <li role="presentation"><a href="{{ url_for('campus.account_mypage') }}">마이페이지</a></li>
+                <li role="presentation"><a href="javascript:document.logout_form.submit();">로그아웃</a></li>
+            </div>
+        {% endif %}
+    </ul>
+</div>

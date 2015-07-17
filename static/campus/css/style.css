@@ -1,0 +1,328 @@
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+html,
+body,
+abbr,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p {
+  font-family: "Jeju Gothic", sans-serif;
+  font-weight: 400;
+}
+html,
+body {
+  font-size: 14px;
+  overflow-x: hidden;
+  -ms-overflow-x: hidden;
+}
+.opencampus-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 80px;
+  padding: 0;
+  background-color: #4caf50;
+  text-align: center;
+  cursor: pointer;
+}
+.opencampus-logo * {
+  margin: 0;
+  padding: 0;
+}
+.opencampus-logo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -22px;
+  margin-left: -35px;
+  width: 70px;
+  height: 44px;
+}
+.sidebar {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 150px;
+  height: 100%;
+  overflow-y: visible;
+  /*
+  .sub-sidebar-lecture, .sub-sidebar-community {
+    position: absolute;
+    top: 0;
+    left: @sidebar-width;
+    width: @sidebar-width;
+    height: 100%;
+  } */
+}
+.sidebar .main-sidebar {
+  background-color: #eeeeee;
+}
+.sidebar .main-sidebar a {
+  color: #333333;
+  text-decoration: none;
+  font-size: 110%;
+  font-weight: 600;
+}
+.sidebar .main-sidebar a:hover,
+.sidebar .main-sidebar a:focus {
+  background-color: #cccccc;
+  color: white;
+  font-weight: 800;
+}
+.sidebar .main-sidebar a:active {
+  background-color: #bbbbbb;
+  color: white;
+  font-weight: 800;
+}
+.sidebar .main-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 100%;
+}
+.sidebar .sub-sidebar {
+  background-color: #cccccc;
+  color: white;
+}
+.userbar {
+  z-index: 990;
+  position: fixed;
+  top: 0;
+  left: 150px;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+}
+.userbar .show-menu-mobile {
+  display: none;
+}
+.userbar .campus-name {
+  position: relative;
+  left: 2%;
+}
+.userbar .campus-name * {
+  display: inline-block;
+}
+.userbar .campus-name h1 {
+  color: #333;
+}
+.userbar .campus-name p {
+  margin-left: 1%;
+  color: #777;
+}
+.userbar .user-btn {
+  position: absolute;
+  top: 50%;
+  right: 15%;
+  margin-top: -30px;
+  text-decoration: none;
+  display: table;
+  /*position: absolute;
+    top: 0;
+    right: 30%;
+    width: @userbar-height;
+    height: @userbar-height;
+    padding: 0;
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -50%;
+      margin-top: -50%;
+      width: (@userbar-height);
+      height: (@userbar-height);
+      cursor: pointer;
+    }
+    .user-nickname {
+      position: relative;
+    } */
+  /*
+    .user-login-content, .user-profile-content {
+      display: none;
+      position: absolute;
+      top: @userbar-height;
+      right: 0;
+      width: 300px;
+      min-height: 200px;
+      padding: auto;
+      z-index: 998;
+      background: white;
+      box-shadow: 0 2px 2px -1px rgba(0, 0, 0, .9);
+      border-radius: 5px 0 3px 5px;
+      a, button {
+        width: 100%;
+      }
+    }
+    .user-profile-content {
+      text-align: center;
+      .user-profile-image-sm {
+        margin: 2% auto 2% auto;
+        width: 100px;
+        height: 100px;
+        img {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          margin-left: -100px;
+        }
+      }
+      .btn {
+        width: 30%;
+        display: inline-block;
+      }
+    }
+    */
+}
+.userbar .user-btn * {
+  display: table-cell;
+  vertical-align: middle;
+}
+.userbar .user-btn img {
+  width: 60px;
+  height: 60px;
+}
+.userbar .user-btn h4 {
+  color: #777;
+  padding: 0 5%;
+  white-space: nowrap;
+}
+.main-view {
+  position: absolute;
+  top: 0;
+  left: 150px;
+}
+.main-view .main-content {
+  margin-top: 90px;
+}
+.main-view .opencampus-footer {
+  margin-top: 50px;
+  border-top: 1px solid #ccc;
+  height: 180px;
+  width: 100%;
+}
+.main-view .opencampus-footer .row {
+  width: 80%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.main-view .opencampus-footer .row #footer-sites {
+  text-align: justify;
+}
+.main-view .opencampus-footer .row .footer-link {
+  color: #333;
+}
+@media screen and (max-width: 769px) {
+  .opencampus-logo {
+    display: none;
+  }
+  .sidebar {
+    z-index: 1300;
+    display: none;
+    width: 100%;
+    top: 50px;
+  }
+  .sidebar .main-sidebar {
+    width: 100%;
+    height: auto;
+    background-color: #4caf50;
+  }
+  .sidebar .main-sidebar a {
+    color: #eee;
+    text-decoration: none;
+    font-size: 110%;
+    font-weight: 600;
+  }
+  .sidebar .main-sidebar a:hover {
+    background-color: #2a8d2e;
+    color: #ccc;
+    font-weight: 800;
+  }
+  .sidebar .main-sidebar a:active {
+    background-color: #197c1d;
+    color: #ccc;
+    font-weight: 800;
+  }
+  .sidebar .main-sidebar .sub-sidebar {
+    background-color: #2a8d2e;
+    color: #eee;
+  }
+  .userbar {
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    background-color: #4caf50;
+    border: none;
+  }
+  .userbar .show-menu-mobile {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 1%;
+  }
+  .userbar .show-menu-mobile a {
+    color: #eee;
+  }
+  .userbar .show-menu-mobile a h1 {
+    margin: 0;
+  }
+  .userbar .campus-name {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 50%;
+    height: 50px;
+    margin-top: -10px;
+  }
+  .userbar .campus-name h1 {
+    margin-left: -30%;
+    font-size: 200%;
+  }
+  .userbar .campus-name h1,
+  .userbar .campus-name p {
+    color: #eee;
+  }
+  .userbar .user-btn {
+    display: none;
+  }
+  .main-view {
+    position: static;
+    width: 100%;
+  }
+  .main-view .main-content:after {
+    content: "";
+    display: block;
+    height: 160px;
+  }
+  .main-view .opencampus-footer {
+    border-top: 1px solid #ccc;
+    height: 400px;
+    align-content: center;
+    -webkit-align-content: center;
+  }
+}
+@media screen and (max-width: 380px) {
+  .userbar .show-menu-mobile {
+    margin-left: 5%;
+  }
+  .userbar .campus-name h1 {
+    margin-left: -48%;
+  }
+  .userbar .campus-name p {
+    display: none;
+  }
+}

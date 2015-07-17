@@ -1,0 +1,61 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/search.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/jquery.jscroll/jquery.jscroll.min.js', version=2) }}"></script>
+    <script type="text/javascript">
+        $('.search-group').jscroll({
+            nextSelector: 'a.jscroll-next:last',
+            contentSelector: '.searched-class'
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="container search-group">
+        <div class="search-box">
+            <form action="{{ url_for('campus.lecture_search') }}" method="GET">
+                <div class="input-group">
+                    <input name="q" type="search" class="form-control" placeholder="강의 검색" value="{{ query }}">
+                    <span class="input-group-btn">
+                        <button type="submit" id="do_search" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        {% for lecture in results %}
+            <a class="searched-class"
+               href="{{ url_for('campus.lecture_detail', year=lecture.year, term=lecture.term_str, code=lecture.code) }}">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <abbr>{{ lecture.year }}년 {{ lecture.term }}학기</abbr>
+                        <h3>{{ lecture.subject_name }}</h3>
+                        <h4>{{ ','.join(lecture.professors) }}</h4>
+                        <h4>{{ ','.join(lecture.departments) }}</h4>
+                        <h4>{{ lecture.code }}</h4>
+                    </div>
+                    <div class="panel-footer">
+                        <p>{{ lecture.type }}</p>
+
+                        <p>{{ lecture.credit }}학점</p>
+                        {% for tag in lecture.tags %}
+                            <p>{{ tag }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        <div class="searched-class">
+            <a rel="next" class="jscroll-next" href="{{ url_for('campus.lecture_search', page=next_page, q=query) }}">더
+                보기<span
+                        aria-hidden="true">&rarr;</span></a>
+        </div>
+    </div>
+{% endblock %}

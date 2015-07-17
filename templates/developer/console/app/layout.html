@@ -1,0 +1,18 @@
+{% extends 'developer/console/layout.html' %}
+{% block content %}
+    <div class="col-md-2">
+        <h4 style="text-align: center">{{ request.app.name }}</h4>
+
+        <div class="list-group">
+            <a href="{{ url_for('console.app_state', app_id=request.app.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.app_state' %} active{% endif %}">상태</a>
+            <a href="{{ url_for('console.app_oauth2', app_id=request.app.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.app_oauth2' %} active{% endif %}">OAuth2 관리</a>
+            <a href="{{ url_for('console.app_embedded', app_id=request.app.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.app_embedded' %} active{% endif %}">임베디드 앱 관리</a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        {% block cm_content %}{% endblock %}
+    </div>
+{% endblock %}

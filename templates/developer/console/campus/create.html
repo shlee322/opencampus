@@ -1,0 +1,80 @@
+{% extends 'developer/console/layout.html' %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript">
+        function create_campus() {
+            var univ_name = $('#univ_name');
+            var univ_type = $('#univ_type');
+            var campus_name = $('#campus_name');
+            var create_btn = $('#create_btn');
+
+            univ_name.prop('disabled', true);
+            univ_type.prop('disabled', true);
+            campus_name.prop('disabled', true);
+            create_btn.prop('disabled', true);
+            $('#error_alert').hide();
+            //show_spinner();
+
+            var data = {
+                'csrf_token': '{{ csrf_token() }}',
+                'univ_name': univ_name.val(),
+                'univ_type': univ_type.val(),
+                'campus_name': campus_name.val()
+            };
+
+            $.post("/console/campuses/create", data, function (msg) {
+                setInterval(function () {
+                    location.href = '/console/campuses/' + msg.id + '/';
+                }, 1000);
+            }).error(function (err) {
+                univ_name.prop('disabled', false);
+                univ_type.prop('disabled', false);
+                campus_name.prop('disabled', false);
+                create_btn.prop('disabled', false);
+
+
+                $('#error_alert').text(err.responseJSON.error.message);
+                $('#error_alert').show();
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default" style="margin-top: 10px">
+        <div class="panel-body">
+            <div id="error_alert" class="alert alert-danger" role="alert" style="display: none"></div>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th scope="row" width="20%">대학교 이름</th>
+                    <td>
+                        <label class="form-inline">
+                            <input id="univ_name" class="form-control input-sm" type="text" value=""/>
+                            <select id="univ_type" class="form-control">
+                                <option selected>대학교</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" width="20%">캠퍼스 이름</th>
+                    <td><label><input id="campus_name" class="form-control input-sm" type="text" value=""/></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="pull-right">
+                            <button id="create_btn" type="button" class="btn btn-primary btn-sm"
+                                    onclick="create_campus()">등록
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('console.init_campus_index') }}">
+        {{ csrf_token_form() | safe }}
+        <button type="submit" class="btn btn-primary btn-sm">인덱스 초기화</button>
+    </form>
+{% endblock %}

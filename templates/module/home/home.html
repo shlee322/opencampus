@@ -1,0 +1,85 @@
+{% extends 'campus/layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/newsfeed/style.css', version=1) }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="width:90%">
+
+        <div class="alert alert-danger">
+            <h6>현재 사이트 개편중입니다. 회원 정보를 이전하기까지 다소 시간이 걸릴 것으로 예상됩니다.</h6>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-md-8">
+                <div class="jumbotron" style="background-color: rgb(251, 227, 0); text-align: center;">
+                    <a href="https://goto.kakao.com/iodxfref" target="_blank">
+                        <img src="{{ url_for('static', filename='img/kakao.png', version=1) }}" style="width:150px;height:150px;margin-bottom:8px">
+                        <h4 style="color: rgb(59, 30, 30);">@오픈캠퍼스</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>학교소식&nbsp;
+                            <button class="btn btn-link"><span class="caret"></span></button></h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">테스트 소식</a>
+                        <a href="#" class="list-group-item">테스트 소식</a>
+                        <a href="#" class="list-group-item">테스트 소식</a>
+                        <a href="#" class="list-group-item">테스트 소식</a>
+                        <a href="#" class="list-group-item">테스트 소식</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>최근 변경된 위키</h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">일감호</a>
+                        <a href="#" class="list-group-item">일감호</a>
+                        <a href="#" class="list-group-item">일감호</a>
+                        <a href="#" class="list-group-item">일감호</a>
+                        <a href="#" class="list-group-item">일감호</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>최근 강의 게시물</h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>최근 강의 과제</h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                        <a href="#" class="list-group-item">오늘의 과제</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

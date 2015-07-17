@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.4"
+install: "pip install -r requirements/requirements.txt"
+before_install:
+    - pip install pytest
+script: py.test
+env:
+  - OPENCAMPUS_SETTINGS=config.travis
+services:
+  - redis-server
+  - elasticsearch
+  - mongodb

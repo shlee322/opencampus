@@ -1,0 +1,45 @@
+{% extends 'campus/layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail.css', version=1) }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="top-menu-content">
+            <h1>{{ lecture.subject_name }}</h1>
+            <h4>{{ ', '.join(lecture.professors) }}</h4>
+            <form action="{{ url_for('campus.lecture_sync', year=year, term=term, code=code) }}" method="POST">
+                {{ csrf_token_form() | safe }}
+                <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+            </form>
+        </div>
+
+        <ul class="nav nav-tabs nav-menu">
+            <li role="presentation"{% if request.endpoint.startswith('lecture_detail') %} class="active"{% endif %}>
+                <a href="{{ url_for('campus.lecture_detail', year=year, term=term, code=code) }}">정보</a>
+            </li>
+            <li role="presentation"{% if request.endpoint.startswith('lecture_board') %} class="active"{% endif %}>
+                <a href="{{ url_for('campus.lecture_board', year=year, term=term, code=code) }}">게시판</a>
+            </li>
+            <li role="presentation"{% if request.endpoint.startswith('lecture_asdffdas') %} class="active"{% endif %}>
+                <a href="{{ url_for('campus.lecture_board', year=year, term=term, code=code) }}">성적/출석</a>
+            </li>
+            {% if session.get_account().id in lecture.admins  %}
+            <li role="presentation"{% if request.endpoint.startswith('lecture_admin') %} class="active"{% endif %}>
+                <a href="{{ url_for('campus.lecture_admin', year=year, term=term, code=code) }}">관리</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        {% block detail_content %}
+        {% endblock %}
+
+        <div class="pull-right" style="margin-right: 10%;">
+            <a href="{{ url_for('campus.lecture_auth_admin', year=year, term=term, code=code) }}">관리자 추가 등록</a>
+        </div>
+    </div>
+{% endblock %}

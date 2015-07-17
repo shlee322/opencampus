@@ -1,0 +1,48 @@
+.join-panel,
+.find-panel {
+  width: 80%;
+  height: 80%;
+}
+.join-panel .btn,
+.find-panel .btn {
+  display: block;
+  margin-top: 5%;
+  width: 50%;
+  float: left;
+  margin-left: 25%;
+}
+.join-panel .btn-panel,
+.find-panel .btn-panel {
+  color: #333;
+}
+.join-panel .btn-panel:hover,
+.find-panel .btn-panel:hover,
+.join-panel .btn-panel:focus,
+.find-panel .btn-panel:focus {
+  text-decoration: none;
+  color: #333;
+}
+.join-panel .input-group,
+.find-panel .input-group {
+  margin-top: 5%;
+  width: 80%;
+  margin-left: 10%;
+}
+.join-panel .panel-footer,
+.find-panel .panel-footer {
+  padding: 0;
+}
+.join-panel .panel-footer table,
+.find-panel .panel-footer table {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #333;
+}
+.join-panel .panel-footer table td,
+.find-panel .panel-footer table td {
+  background-color: #ccc;
+}
+.join-panel .panel-footer table td.active,
+.find-panel .panel-footer table td.active {
+  background-color: #197c1d;
+}

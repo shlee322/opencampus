@@ -1,0 +1,59 @@
+{% extends "developer/console/campus/layout.html" %}
+{% block cm_content %}
+    <form method="POST"
+          action="{{ url_for('console.campus_save_state', campus_id=campus.id) }}">
+        {{ csrf_token_form() | safe }}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th scope="row" width="20%">Id</th>
+                <td>{{ campus.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row" width="20%">Domain</th>
+                <td>
+                    {% if is_super_user %}
+                        <input class="form-control input-sm" type="text" name="domain" value="{{ campus.domain }}"/>
+                    {% else %}
+                        {{ campus.domain }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" width="20%">대학교 이름</th>
+                <td>
+                    {% if is_super_user %}
+                        <label class="form-inline">
+                            <input name="univ_name" class="form-control input-sm" type="text"
+                                   value="{{ campus.univ_name }}"/>
+                            <select name="univ_type" class="form-control">
+                                <option selected>대학교</option>
+                            </select>
+                        </label>
+                    {% else %}
+                        {{ campus.univ_name }}{{ campus.univ_type }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" width="20%">캠퍼스 이름</th>
+                <td>
+                    {% if is_super_user %}
+                        <label><input name="campus_name" class="form-control input-sm" type="text"
+                                      value="{{ campus.campus_name }}"/></label>
+                    {% else %}
+                        {{ campus.campus_name }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if is_super_user %}
+            <tr>
+                <td colspan="3">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary btn-sm">저장</button>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </form>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/style.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js', version=2) }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/bootstrap-select/dist/js/bootstrap-select.min.js', version=2) }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/moment/min/moment.min.js', version=2) }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js', version=2) }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker();
+            $('.user-btn').click(function () {
+//        $('.user-login-content').fadeToggle();
+                $('.user-profile-content').fadeToggle();
+            });
+            $(window).resize(function () {
+                if ($(window).width() > 768) {
+                    $('.sidebar').css('display', 'block');
+                } else {
+                    $('.sidebar').css('display', 'none');
+                }
+            });
+
+        });
+
+        function logout() {
+
+        }
+
+        var showUserMenu = function () {
+            {% if session.get_account() %}
+                if ($(window).width() > 768) {
+                    $('.user-btn').popover({
+                        html: true,
+                        placement: 'bottom',
+                        trigger: 'click focus',
+                        content: '<ul class="nav nav-pills nav-stacked">' +
+                        '<li role="presentation"><a href="{{ url_for('campus.account_mypage') }}">마이페이지</a></li>' +
+                        '<li role="presentation"><a href="javascript:document.logout_form.submit();">로그아웃</a></li>' +
+                        '</ul>'
+                    });
+                } else {
+                    $('#user_menu_mobile').toggleClass('hidden');
+                }
+
+            {% else %}
+                $('#user-profile-modal').appendTo('body').modal({
+                    keyboard: true
+                }).css('z-index', '1500');
+            {% endif %}
+        };
+
+        var showSideBarMobile = function () {
+            $('.sidebar').slideToggle();
+        };
+
+        var showSubSidebar = function (obj) {
+            $('.sub-sidebar').addClass('hidden');
+
+            var submenu = $(obj).parent().next();
+            if (!submenu.hasClass('sub-sidebar')) return;
+            submenu.removeClass('hidden');
+        };
+    </script>
+{% endblock %}
+{% block body %}
+    <header class="container">
+        <div class="opencampus-logo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='img/logo_imgonly.png', version=1) }}"
+                 alt="OpenCampus Logo">
+            </a>
+        </div>
+        <div class="userbar">
+            <div class="show-menu-mobile hidden-md hidden-lg">
+                <a href="javascript:showSideBarMobile();"><h1><i class="fa fa-bars"></i></h1></a>
+            </div>
+            <a class="campus-name" href="/"><h1>{{ request.campus.univ_name }}{{ request.campus.univ_type }}</h1>
+
+                <p>{{ request.campus.campus_name }}캠퍼스</p></a>
+
+            <a href="javascript:showUserMenu()" class="user-btn">
+                <img src="{{ url_for('static', filename='img/user_icon.png', version=1) }}"
+                     alt="User Profile">
+                <h4 class="user-nickname">{% if not session.get_account() %}로그인{% else %}
+                    {{ session.get_account().nickname }}{% endif %}</h4>
+            </a>
+
+            <form name="logout_form" action="{{ url_for('campus.account_logout') }}" method="POST">
+                {{ csrf_token_form() | safe }}
+            </form>
+        </div>
+    </header>
+    <nav class="sidebar">
+        {% include 'campus/sidebar.html' %}
+    </nav>
+    <div class="main-view">
+        <article class="main-content">
+            {% block content %}
+            {% endblock %}
+        </article>
+        <footer class="opencampus-footer">
+            {% include 'footer.html' %}
+        </footer>
+    </div>
+    {% include 'campus/user.html' %}
+{% endblock %}

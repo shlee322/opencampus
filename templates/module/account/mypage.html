@@ -1,0 +1,38 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/user/mypage.css', version=2) }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="container">
+            <div class="user-action-menu">
+                <h1>{{ session.get_account().nickname }} 님</h1>
+                <div class="btn-group btn-group-lg">
+                    <a class="btn btn-default btn-lg" href="#">사용자 전환</a>
+                    <a class="btn btn-danger btn-lg" href="javascript:document.logout_form.submit();">로그아웃</a>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-pills nav-menu">
+            <li role="presentation" class="active">
+                <a href="{{ url_for('campus.account_mypage') }}">회원정보</a>
+            </li>
+            <li role="presentation">
+                <a href="#">학생인증</a>
+            </li>
+            <li role="presentation">
+                <a href="#">부가기능</a>
+            </li>
+        </ul>
+        {% block mypage_content %}
+        {% endblock %}
+    </div>
+{% endblock %}

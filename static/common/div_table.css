@@ -1,0 +1,12 @@
+.div-table-tr {
+    padding: 5px;
+}
+
+.div-table-tr:nth-child(2n+1) {
+    background-color: rgb(250, 250, 250);
+}
+
+.div-table-thead {
+    border-bottom: #EEE 1px solid;
+    padding: 5px;
+}

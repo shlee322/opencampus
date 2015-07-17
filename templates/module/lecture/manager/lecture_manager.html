@@ -1,0 +1,7 @@
+{% extends "developer/console/campus/layout.html" %}
+{% block cm_content %}
+    <form method="POST" action="{{ url_for('console.init_recture_index', campus_id=request.campus.id) }}">
+        {{ csrf_token_form() | safe }}
+        <button type="submit" class="btn btn-primary btn-sm">강의 인덱스 초기화</button>
+    </form>
+{% endblock %}

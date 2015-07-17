@@ -1,0 +1,36 @@
+{% extends 'module/lecture/detail/admin/layout.html' %}
+{% block admin_content %}
+    <div id="admin_manager" class="lecture-admin-page">
+        <h4>현재 관리자</h4>
+        <ul class="list-group">
+            {% for admin in admins %}
+                <li class="list-group-item">
+                    <form action="{{ url_for('campus.lecture_admin_administrators_remove', year=year, term=term, code=code) }}" method="POST">
+                        {{ csrf_token_form() | safe }}
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                {{ admin.account_id }} ({{ admin.name }})
+                            </span>
+                            <input type="hidden" name="account_id" value="{{ admin.account_id }}"/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </span>
+
+                        </div>
+
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <h4>관리자 추가</h4>
+        <form action="{{ url_for('campus.lecture_admin_administrators', year=year, term=term, code=code) }}" method="POST">
+            {{ csrf_token_form() | safe }}
+            <div class="input-group">
+                <input type="text" name="account_id" value="" class="form-control input-sm" placeholder="ID"/>
+                <span class="input-group-btn"><button type="submit" class="btn btn-primary btn-sm">추가</button></span>
+            </div>
+        </form>
+    </div>
+{% endblock %}

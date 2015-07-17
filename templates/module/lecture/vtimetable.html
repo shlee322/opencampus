@@ -1,0 +1,185 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/timetable/style.css', version=1) }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='campus/js/lecture/vtimetable.js', version=2) }}"></script>
+    <script type="text/javascript"
+            src="https://apis.daum.net/maps/maps3.js?apikey={{ config.DAUM_MAP_API_KEY }}"></script>
+    <script type="text/javascript">
+        var GET_PALCE_URL = '{{ url_for('api.place_search', campus_id=request.campus.id) }}';
+        var map = new daum.maps.Map(document.getElementById('vtimetable_map_view'), {
+            center: new daum.maps.LatLng(37.54699, 127.09598),
+            level: 4
+        });
+        var marker = new daum.maps.Marker({
+            position: map.getCenter()
+        });
+        marker.setMap(map);
+
+        function update_map(place_name) {
+            $.getJSON(GET_PALCE_URL + '?q=' + encodeURIComponent(place_name) + '&callback=?', update_map_callback);
+        }
+
+        function update_map_callback(result) {
+            if (result.data.length < 1) return;
+            var place = result.data[0];
+
+            var latlng = new daum.maps.LatLng(place.location.latitude, place.location.longitude);
+            marker.setPosition(latlng);
+            map.setCenter(latlng);
+        }
+
+        $.getJSON(GET_PALCE_URL + '?callback=?', update_map_callback);
+
+        var changeTab = function(number) {
+            $('li[id^=timetable_]').removeClass('active');
+            $('#timetable_' + number).addClass('active');
+        };
+
+        function recommend(name) {
+            $('#select_query').val(name);
+            $('#do_search').submit();
+        }
+
+        function view_url() {
+
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2 col-md-2">
+                <form id="vtimetable_search" action="#">
+                    <div class="input-group">
+                        <input type="text" id="select_year" class="form-control full-width" placeholder="연도"
+                               value="{{ current_year }}">
+                        <select id="select_semester" class="selectpicker half-width">
+                            <option value="spring" selected>봄</option>
+                            <option value="summer">여름</option>
+                            <option value="fall">가을</option>
+                            <option value="winter">겨울</option>
+                        </select>
+                    </div>
+                    <div class="input-group full-width">
+                        <input id="select_query" type="search" class="form-control" placeholder="강의 검색">
+                    <span class="input-group-btn">
+                        <button type="submit" id="do_search" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    </div>
+                </form>
+                <div class="list-group" id="search_results">
+                </div>
+                <div id="toggle_create_box">
+                    <button id="toggle_create_btn" class="btn btn-link">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                        <label for="toggle_create_btn">시간표 생성기</label>
+                    </button>
+                </div>
+                <div id="create_timetable_box" class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="input-group">
+                            <input id="timetable_generator_min_credit" type="number" class="half-width form-control"
+                                   placeholder="최소">
+                            <input id="timetable_generator_max_credit" type="number" class="half-width form-control"
+                                   placeholder="최대">
+                        </div>
+                        <div class="btn-group">
+                            <button id="timetable_generator_pre_btn" class="btn btn-default btn-sm">&lt;&lt;</button>
+                            <button id="timetable_generator_generate_btn" class="btn btn-default btn-sm">생성</button>
+                            <button id="timetable_generator_next_btn" class="btn btn-default btn-sm">&gt;&gt;</button>
+                        </div>
+                    </div>
+                    <div class="panel-body list-group" id="lecture_timetable_generator_lecture_list">
+                    </div>
+                    <small>듣고싶은 과목을 모두 선택 후 생성!</small>
+                </div>
+            </div>
+            <div class="col-sm-7 col-md-7">
+                <ul class="nav nav-tabs">
+                    <li id="timetable_1" role="presentation"><a href="javascript:changeTab('1')">시간표</a></li>
+                    <div class="dropdown pull-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="share_menu"
+                            data-toggle="dropdown" aria-expanded="true">
+                        <i class="fa fa-share"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="share_menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:view_url()">URL</a></li>
+                    </ul>
+                </div>
+                </ul>
+                <div class="timetable">
+                    <div class="row row-head">
+                        <div class="cell-time">
+                            <p>시간</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>월</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>화</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>수</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>목</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>금</p>
+                        </div>
+                        <div class="cell-index">
+                            <p>토</p>
+                        </div>
+                    </div>
+                    <div id="timetable_select_box"></div>
+                </div>
+                <div>
+                    <h3>추천과목</h3>
+                    {% for name in recommend %}
+                    <a href="javascript:recommend('{{ name }}')"><p>{{ name }}</p></a>
+                    {% endfor %}
+                    {% if recommend | count < 1 %}
+                        추천할 과목이 존재하지 않습니다. 계정 상태를 확인해주세요
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <h2>선택한 과목</h2>
+                <ul class="list-group" id="lecture_view_list">
+                </ul>
+                <div class="panel panel-default class-detail-view">
+                    <div class="panel-body">
+                        <h3 id="detail_lecture_info_subject_name"></h3>
+
+                        <p id="detail_lecture_info_code"></p>
+                        <h4 id="detail_lecture_info_professors"></h4>
+                        <h4 id="detail_lecture_info_departments"></h4>
+
+                        <div id="detail_lecture_info_timetable">
+                        </div>
+                        <div class="class-detail-additional-info">
+                            <abbr id="detail_lecture_info_type"></abbr>
+                            <abbr id="detail_lecture_info_credit"></abbr>
+                            <abbr id="detail_lecture_info_tags"></abbr>
+                        </div>
+                        <div id="vtimetable_map_view" class="map-view">
+                        </div>
+                        <a class="btn btn-link btn-sm" href="#">
+                            <p>추가 정보 보기</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

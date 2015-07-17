@@ -1,0 +1,48 @@
+{% extends 'module/account/mypage.html' %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/user/information.css', version=2) }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+{% endblock %}
+
+{% block mypage_content %}
+    <div class="container">
+        <table id="mypage_info_table" class="table">
+            <tr>
+                <td class="user-info-key">아이디</td>
+                <td>{{ session.get_account().account_id }}</td>
+            </tr>
+            <tr>
+                <td class="user-info-key">학번</td>
+                <td>{{ session.get_account().student_id }}</td>
+            </tr>
+            <tr>
+                <td class="user-info-key">이름</td>
+                <td>{{ session.get_account().name }}</td>
+            </tr>
+            <tr>
+                <td class="user-info-key">닉네임</td>
+                <td>{{ session.get_account().nickname }}</td>
+            </tr>
+        </table>
+        <div class="btn-group btn-group-lg put-center">
+            <a class="btn btn-default btn-lg" href="#">변경</a>
+            <a id="delete_account_btn" class="btn btn-danger btn-lg"
+                    href="javascript:void(0)" onclick="showDeleteAccount()">탈퇴</a>
+        </div>
+
+        {% include 'module/account/delete_account.html' %}
+    </div>
+    <script type="text/javascript">
+        var showDeleteAccount = function () {
+            $('#delete_account_modal').modal({
+                keyboard: true
+            }).css('z-index', '1500');
+        };
+    </script>
+{% endblock %}

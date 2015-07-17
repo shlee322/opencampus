@@ -1,0 +1,47 @@
+{% extends "developer/console/app/layout.html" %}
+{% block cm_content %}
+<div class="text-right">
+    <form action="{{ url_for('console.app_oauth2_create', app_id=request.app.id) }}" method="POST">
+        {{ csrf_token_form() | safe }}
+        <button type="submit" class="btn btn-info btn-xs">새 클라이언트 ID 만들기</button>
+    </form>
+    {% for client in oauth2_clients %}
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th scope="row" width="20%">클라이언트 ID</th>
+            <td>
+                {{ client.id }}
+                <form method="POST"
+                      action="{{ url_for('console.app_oauth2_method', app_id=request.app.id, oauth2_client_id=client.id) }}">
+                    {{ csrf_token_form() | safe }}
+                    <input type="hidden" name="method" value="delete"/>
+                    <button role="button" class="btn btn-danger btn-xs">삭제</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" width="20%">클라이언트 비밀키</th>
+            <td>
+                {{ client.secret_key }}
+                <form method="POST" action="{{ url_for('console.app_oauth2_method', app_id=request.app.id, oauth2_client_id=client.id) }}">
+                    {{ csrf_token_form() | safe }}
+                    <input type="hidden" name="method" value="reset_secret_key"/>
+                    <button type="submit" class="btn btn-info btn-xs">비밀키 갱신</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" width="20%">URI 리디렉션</th>
+            <td>
+                <form method="POST" action="{{ url_for('console.app_oauth2_method', app_id=request.app.id, oauth2_client_id=client.id) }}">
+                    {{ csrf_token_form() | safe }}
+                    <textarea name="redirect_uris" class="form-control" rows="3">{{ '\n'.join(client.redirect_uris) }}</textarea>
+                    <input type="hidden" name="method" value="save_redirect_uris"/>
+                    <button type="submit" class="btn btn-info btn-xs">URI 리디렉션 저장</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
+</div>
+{% endblock %}

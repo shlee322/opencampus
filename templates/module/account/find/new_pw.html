@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="panel panel-default join-panel">
+        <div class="panel-heading">
+            <h1>아이디/비밀번호 찾기</h1>
+        </div>
+        <div class="panel-body">
+            <h2>당신의 아이디는 {{ portal_id }} 입니다.</h2>
+            <h2>새 비밀번호를 만드시겠습니까?</h2>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">새 비밀번호</span>
+                <input type="password" class="form-control">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">새 비밀번호 확인</span>
+                <input type="password" class="form-control">
+            </div>
+            <button id="make_new_pw_btn" onclick="makeNewPw()" type="button" class="btn btn-primary btn-lg">만들겠습니다.</button>
+        </div>
+        <div class="panel-footer">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td class="active"></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

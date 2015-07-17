@@ -1,0 +1,136 @@
+.container-fluid {
+  min-width: 900px;
+  max-width: 1180px;
+  overflow-x: auto;
+}
+
+.half-width {
+  width: 50% !important;
+}
+.full-width {
+  width: 99% !important;
+}
+#toggle_create_box {
+  label {
+    text-decoration: none;
+    color: #333;
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}
+#create_timetable_box {
+  display: none;
+}
+.list-group-item {
+  * {
+    display: inline;
+  }
+  p {
+    margin-left: 10px;
+  }
+}
+.panel-heading {
+  padding: 0;
+  .btn-group {
+
+    width:  101%;
+    .btn {
+      width: 33.3%;
+    }
+  }
+}
+.panel-body {
+  padding: 0;
+}
+.timetable {
+  display: table;
+  width: 100%;
+  .row {
+    display: table-row;
+    min-height: 20px;
+    height: 30px;
+    overflow-y: visible;
+  }
+  .row-head {
+    min-height: 20px;
+    height: 30px;
+  }
+  .cell, .cell-time, .cell-index {
+    display: table-cell;
+    position: relative;
+    border: 1px solid #ccc;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: top;
+  }
+  .cell {
+    max-width: 150px;
+    width: 15%;
+    &:hover {
+      background-color: #aaa;
+    }
+    .lecture-timetable-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 900;
+      word-break: keep-all;
+      a {
+        text-decoration: none;
+        color: whitesmoke;
+      }
+    }
+  }
+  .cell-time {
+    max-width: 100px;
+    width: 11%;
+  }
+  #timetable_select_box {
+    z-index: 2000;
+    display: none;
+    position: absolute;
+  }
+}
+
+.selected {
+  background-color: #aaa;
+}
+.class-detail-view {
+  .panel-body {
+    padding: 5px;
+    * {
+      text-align: center;
+    }
+    .well {
+      * {
+      }
+      padding :0;
+    }
+    .class-detail-additional-info {
+      margin-bottom: 15px;
+      abbr {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 5px;
+        background-color: #ccc;
+      }
+    }
+    .map-view {
+      display: block;
+      width: 100%;
+      height: 150px;
+      margin-bottom: 15px;
+      background-color: green;
+    }
+    .btn {
+      display: block;
+      float: right;
+      padding: 0;
+      * {
+        margin: 0;
+      }
+    }
+  }
+}

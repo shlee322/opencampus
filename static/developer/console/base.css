@@ -1,0 +1,12 @@
+body {
+    padding-top: 50px;
+}
+
+.project-list-panel {
+    margin-top: 10px;
+}
+
+.project-list-panel-body {
+    padding-left: 25px;
+    padding-right: 25px;
+}

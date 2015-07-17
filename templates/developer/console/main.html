@@ -1,0 +1,55 @@
+{% extends 'developer/console/layout.html' %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/jquery.jscroll/jquery.jscroll.min.js', version=2) }}"></script>
+    {% if session.get_admin_account() %}
+        <script type="text/javascript">
+            $('.project-list').jscroll({
+                nextSelector: 'a.jscroll-next:last',
+                contentSelector: '.project-content'
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <ul class="nav nav-pills" role="tablist">
+        <li role="presentation"{% if request.endpoint == 'console.app_list' %} class="active"{% endif %}><a
+                href="{{ url_for('console.app_list') }}">App</a></li>
+        <li role="presentation"{% if request.endpoint == 'console.campus_list' %} class="active"{% endif %}><a
+                href="{{ url_for('console.campus_list') }}">Campus</a></li>
+    </ul>
+    <div class="panel panel-default project-list-panel">
+        <div class="panel-body project-list-panel-body">
+            {% if view_create %}
+                <div class="text-right">
+                    <a href="{% if request.endpoint == 'console.campus_list' %}{{ url_for('console.create_campus') }}{% else %}{{ url_for('console.create_app') }}{% endif %}" role="button" class="btn btn-info btn-xs">생성</a>
+                </div>
+            {% endif %}
+            <div class="row div-table-thead">
+                <div class="col-md-1"><strong>종류</strong></div>
+                <div class="col-md-3"><strong>프로젝트 ID</strong></div>
+                <div class="col-md-8"><strong>프로젝트 이름</strong></div>
+            </div>
+            <div class="project-list">
+                {% if not session.get_admin_account() %}
+                    <h2>로그인이 필요합니다</h2>
+                    <p>OpenCampus Developer Console은 Google 계정을 사용합니다. </p>
+                {% else %}
+                    {% for project in projects %}
+                        <div class="row div-table-tr project-content">
+                            <div class="col-md-1"><span class="label label-default">{% if project.project_type=='campus' %}캠퍼스{% else %}앱{% endif %}</span></div>
+                            <div class="col-md-3">
+                                <a href="{% if project.project_type=='campus' %}{{ url_for('console.campus_state', campus_id=project.project_id) }}{% else %}{{ url_for('console.app_state', app_id=project.project_id) }}{% endif %}">{{ project.project_id }}</a>
+                            </div>
+                            <div class="col-md-8">{{ project.project_name }}</div>
+                        </div>
+                    {% endfor %}
+                    <div class="project-content">
+                        <a rel="next" class="jscroll-next" href="{{ url_for(request.endpoint, page=next_page) }}">더 보기 <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

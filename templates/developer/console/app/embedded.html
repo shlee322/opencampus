@@ -1,0 +1,35 @@
+{% extends "developer/console/app/layout.html" %}
+{% block cm_content %}
+<form method="POST">
+    {{ csrf_token_form() | safe }}
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th scope="row" width="20%">사용여부</th>
+            <td><label><input type="checkbox" name="use" {% if use_embedded %}checked{% endif %}>사용</label></td>
+        </tr>
+        <tr>
+            <th scope="row" width="20%">iframe URI</th>
+            <td><label><input type="url" name="uri" class="form-control" value="{{ embedded_iframe_uri }}"></label></td>
+        </tr>
+        <tr>
+            <th scope="row" width="20%">표시할 학교</th>
+            <td>
+                <label>
+                    <select multiple class="form-control" name="campus">
+                        {% for campus in campuses %}
+                            <option value="{{ campus.id }}" {% if campus.id in use_campus_ids %} selected{% endif %}>{{ campus.univ_name }}{{ campus.univ_type }} {{ campus.campus_name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary btn-sm">저장</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

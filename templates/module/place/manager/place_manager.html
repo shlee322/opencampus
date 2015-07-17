@@ -1,0 +1,81 @@
+{% extends "developer/console/campus/layout.html" %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="https://apis.daum.net/maps/maps3.js?apikey={{ config.DAUM_MAP_API_KEY }}"
+            xmlns="http://www.w3.org/1999/html"></script>
+    <script type="text/javascript">
+    var mapContainer = document.getElementById('map'),
+    mapOption = {
+        center: new daum.maps.LatLng(37.54699, 127.09598),
+        level: 4
+    };
+    var map = new daum.maps.Map(mapContainer, mapOption);
+
+    var marker = new daum.maps.Marker({
+        position: map.getCenter()
+    });
+    marker.setMap(map);
+
+    daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+        var latlng = mouseEvent.latLng;
+
+        marker.setPosition(latlng);
+
+        var message = '위도:' + latlng.getLat() + ', ';
+        message += '경도:' + latlng.getLng();
+
+        document.getElementById('latlng').innerHTML = message;
+    });
+    </script>
+{% endblock %}
+
+{% block cm_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">장소</div>
+    <div class="panel-body">
+        <form action="{{ url_for('console.place_manager', campus_id=request.campus.id) }}" method="POST">
+            {{ csrf_token_form() | safe }}
+            <table class="table table-striped table-hover table-condensed table-bordered">
+                <thead>
+                <tr>
+                    <td width="150px">ID</td>
+                    <td width="*">이름리스트(,로 구분)</td>
+                    <td width="150px">위도</td>
+                    <td width="150px">경도</td>
+                    <td width="80px"></td>
+                </tr>
+                </thead>
+                <tbody id="place_list">
+                    {% for place in places %}
+                        <tr>
+                            <td>{{ place.id }}</td>
+                            <td><input name="{{ place.id }}_names" type="text" class="form-control input-sm" value="{{ ', '.join(place.names) }}" placeholder="이름리스트(,로 구분)"/></td>
+                            <td><input name="{{ place.id }}_latitude" type="text" class="form-control input-sm" value="{{ place.location[0] }}" placeholder="위도"/></td>
+                            <td><input name="{{ place.id }}_longitude" type="text" class="form-control input-sm" value="{{ place.location[1] }}" placeholder="경도"/></td>
+                            <td>
+                                <form action="{{ url_for('console.place_manager_place_delete', campus_id=request.campus.id) }}" method="POST">
+                                    {{ csrf_token_form() | safe }}
+                                    <input name="place_id" type="hidden" value="{{ place.id }}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>새로 추가</td>
+                        <td><input name="new_place_names" type="text" class="form-control input-sm" value="" placeholder="이름리스트(,로 구분)"/></td>
+                        <td><input name="new_place_latitude" type="text" class="form-control input-sm" value="" placeholder="위도"/></td>
+                        <td><input name="new_place_longitude" type="text" class="form-control input-sm" value="" placeholder="경도"/></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary btn-sm">저장</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p id="latlng"></p>
+<div id="map" style="width: 800px; height: 400px;"></div>
+{% endblock %}

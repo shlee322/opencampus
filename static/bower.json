@@ -1,0 +1,25 @@
+{
+  "name": "opencampus-static",
+  "version": "0.0.0",
+  "private": true,
+  "authors": [
+    "Lee Sanghyuck <shlee322@elab.kr>"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "bootstrap-select": "~1.7.1",
+    "bootswatch": "3.3.1+2",
+    "jquery-cookie": "~1.4.1",
+    "html5shiv": "~3.7.2",
+    "respond": "~1.4.2",
+    "jquery": "1.11.2",
+    "summernote": "~0.6.1",
+    "jquery.jscroll": "~2.2.4",
+    "datetimepicker": "~2.4.1",
+    "nestable": "*",
+    "DefinitelyTyped": "latest",
+    "eonasdan-bootstrap-datetimepicker": "~4.7.14",
+    "blueimp-file-upload": "~9.10.0",
+    "jquery-ui": "latest"
+  }
+}

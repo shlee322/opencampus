@@ -1,0 +1,31 @@
+{% extends 'module/wiki/main.html' %}
+
+{% block css %}
+{{ super() }}
+{% endblock %}
+{% block js %}
+{{ super() }}
+{% endblock %}
+{% block wiki_content %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>편집 날짜</td>
+            <td>작성자명</td>
+            <td>작성 내용</td>
+        </tr>
+        </thead>
+    <tbody>
+    <tr>
+        <td>2015년 4월 21일 오후 3시 15분</td>
+        <td>정진호</td>
+        <td>
+            <div class="well">
+                <p>+ 가장 큰 호수이다.</p>
+                <p>- 이쁘다</p>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+{% endblock %}

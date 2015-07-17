@@ -1,0 +1,60 @@
+.search-box {
+  position: static;
+  margin-bottom: 5%;
+}
+.search-box div {
+  position: relative;
+  left: 50%;
+  margin-left: -25%;
+  width: 30%;
+}
+.search-group {
+  margin-top: 30px;
+}
+.search-group .searched-class {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 0;
+  max-width: 280px;
+  min-width: 230px;
+  width: 20%;
+  vertical-align: top;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+}
+.search-group .searched-class .panel-body {
+  margin: 0;
+}
+.search-group .searched-class .panel-body abbr {
+  color: #bbb;
+}
+.search-group .searched-class .panel-body h3 {
+  font-weight: 600;
+}
+.search-group .searched-class .panel-footer {
+  margin: 0;
+  padding: 7px;
+  background-color: white !important;
+}
+.search-group .searched-class .panel-footer * {
+  display: inline;
+}
+.search-group .searched-class .panel-footer p,
+.search-group .searched-class .panel-footer abbr {
+  background-color: #ddd;
+  padding: 3px;
+}
+@media screen and (max-width: 768px) {
+  .search-box {
+    position: static;
+    margin-bottom: 5%;
+  }
+  .search-box div {
+    position: relative;
+    left: 50%;
+    margin-left: -25%;
+    width: 50%;
+  }
+}

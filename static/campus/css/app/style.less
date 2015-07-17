@@ -1,0 +1,53 @@
+#search_app {
+  width: 30%;
+  position: relative;
+  top: 0;
+  left: 50%;
+  margin-left: -15%;
+}
+
+.row {
+  margin-bottom: 30px;
+}
+
+.app-card {
+  display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 0;
+  max-width: 300px;
+  min-width: 150px;
+  width: 18%;
+  vertical-align: top;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  img {
+    width: 140px;
+    height: 140px;
+  }
+  .caption {
+    margin: 0;
+    p {
+      color: #aaa;
+    }
+    h3 {
+      font-weight: 600;
+    }
+
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #search_app {
+    width: 80%;
+    position: relative;
+    top: 0;
+    left: 50%;
+    margin-left: -40%;
+  }
+  .app-card {
+    display: block;
+    width: 100%;
+  }
+}

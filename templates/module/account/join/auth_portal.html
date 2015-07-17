@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="panel panel-default join-panel">
+        <div class="panel-heading">
+            <h1>회원가입</h1>
+        </div>
+        <div class="panel-body">
+            <h2>포탈 ID 인증</h2>
+            <h4>포탈 ID와 비밀번호를 입력해주시기 바랍니다.</h4>
+            <div class="input-group input-group-lg {% if req_auth and not portal_id %}has-error{% endif %}">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input id="portal_id" type="text" class="form-control" placeholder="아이디" value="{{ portal_id }}">
+            </div>
+            <div class="input-group input-group-lg {% if req_auth and not portal_pw %}has-error{% endif %}">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                <input id="portal_pw" type="password" class="form-control" placeholder="비밀번호" value="{{ portal_pw }}">
+            </div>
+            <button onclick="auth_portal()" id="auth_portal_next_btn" class="btn btn-primary btn-lg">다음</button>
+        </div>
+        {% if error %}
+        <div class="alert alert-warning" role="alert">{{ error }}</div>
+        {% endif %}
+        <div class="panel-footer">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td class="active"></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function auth_portal() {
+        $('#auth_portal_next_btn').text('인증 시도 중 입니다...');
+        $('#auth_portal_next_btn').attr("disabled",true);
+
+        join_phase({
+            phase:'req_auth_portal',
+            portal_id: $('#portal_id').val(),
+            portal_pw: $('#portal_pw').val()
+        });
+    }
+</script>

@@ -1,0 +1,22 @@
+{% extends 'developer/console/layout.html' %}
+{% block content %}
+    <div class="col-md-2">
+        <h4 style="text-align: center">{{ request.campus.univ_name }}{{ request.campus.univ_type }} ({{ request.campus.campus_name }})</h4>
+
+        <div class="list-group">
+            <a href="{{ url_for('console.campus_state', campus_id=request.campus.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.campus_state' %} active{% endif %}">상태</a>
+            <a href="{{ url_for('console.campus_gateways', campus_id=request.campus.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.campus_gateways' %} active{% endif %}">Gateway APIs</a>
+            <a href="{{ url_for('console.campus_menus', campus_id=request.campus.id) }}"
+               class="list-group-item{% if request.endpoint == 'console.campus_menus' %} active{% endif %}">메뉴</a>
+            {% for menu in module_menus %}
+            <a href="{{ url_for(menu.endpoint, campus_id=request.campus.id) }}"
+               class="list-group-item{% if request.endpoint == menu.endpoint %} active{% endif %}">{{ menu.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-10">
+        {% block cm_content %}{% endblock %}
+    </div>
+{% endblock %}

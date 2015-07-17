@@ -1,0 +1,17 @@
+{% extends 'api/layout.html' %}
+
+{% block content %}
+    <form action="{{ request.url }}" method="POST">
+        {{ csrf_token_form() | safe }}
+        <div class="col-sm-offset-3 col-md-offset-4 col-lg-offset-4 col-sm-6 col-md-4 col-lg-4" style="margin-top: 35px;">
+            <h2>{{ app.name }}</h2><span>에서 다음과 같은 권한을 요청합니다</span>
+            <hr>
+            <ol>
+                {% for s in scope %}
+                <li>{{ scope_name.get(s, s) }}</li>
+                {% endfor %}
+            </ol>
+            <p><a href="javascript:window.close()" class="btn btn-danger btn-lg">거부</a><button type="submit" class="btn btn-primary btn-lg">동의</button></p>
+        </div>
+    </form>
+{% endblock %}

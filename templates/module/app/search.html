@@ -1,0 +1,48 @@
+{% extends 'campus/layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='campus/css/app/style.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/jquery.jscroll/jquery.jscroll.min.js', version=2) }}"></script>
+    <script type="text/javascript">
+    $('#app_container').jscroll({
+        nextSelector: 'a.jscroll-next:last',
+        contentSelector: '.searched-class'
+    });
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form  action="{{ url_for('campus.app_search') }}" method="GET">
+                <div id="search_app" class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="앱 검색..." value="{{ query }}">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div id="app_container" class="row">
+            {% for app in results %}
+            <div class="searched-class thumbnail app-card">
+                <img src="{{ url_for('api.get_app_image', app_id=app.id) }}">
+                <div class="caption">
+                    <h3>{{ app.name }}</h3>
+                    <p>{{ app.description }}</p>
+                    <p><a href="{{ url_for('campus.app_run', app_id=app.id) }}" role="button" class="btn btn-primary">실행</a></p>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="searched-class">
+                <a rel="next" class="jscroll-next" href="{{ url_for('campus.app_search', page=next_page, q=query) }}">더 보기<span aria-hidden="true">&rarr;</span></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

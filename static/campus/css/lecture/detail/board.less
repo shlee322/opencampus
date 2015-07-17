@@ -1,0 +1,99 @@
+@page-btn-size: 40px;
+
+#write_article_btn {
+  width: 100%;
+
+}
+
+.list-article {
+  width: 70%;
+}
+
+.nav-article {
+  margin: auto;
+  width: 60%;
+  .input-group {
+    width: 57.7%;
+  }
+}
+
+.homework-panel {
+  .panel-heading{
+    * { display: inline-block; }
+    background-color: white !important;
+  }
+  .panel-body {
+    * { display: inline-block;}
+    .progress {
+      margin: 0; width: 70%; height: 20px;
+      .progress-bar {
+        font-size: 14px; line-height: 20px;
+      }
+    }
+  }
+}
+
+#board_control_btn_group {
+  position: relative;
+  width: 50%;
+  top: 2%;
+  left: 50%;
+  margin-left: -25%;
+}
+.article-box {
+  width: 70%;
+
+  .panel-heading {
+    background-color: white !important;
+    h5, abbr {
+      display: inline;
+    }
+    abbr {
+      color: #aaa;
+    }
+  }
+}
+
+.article-comment {
+  .panel-body {
+    display: table;
+    .comment-body {
+      min-width: 70%;
+    }
+    .comment-body, .comment-header, .comment-addon {
+      display: table-cell;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .homework-panel {
+    .panel-body {
+      .progress { width: 100% }
+    }
+  }
+  .article-comment {
+    .panel-body {
+      .comment-body, .comment-addon { display: block };
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .article-box {
+    width: 100%;
+  }
+  .article-comment {
+    .panel-body {
+      display: block;
+      .comment-body, .comment-addon {
+        display: inline-block;
+      }
+      .comment-header {
+        display: block;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

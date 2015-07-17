@@ -1,0 +1,41 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail/homework.css', version=1) }}">
+{% endblock %}
+{% block detail_content %}
+    <table class="table list-homework">
+        <thead>
+            <tr>
+                <td>과제명</td>
+                <td>제출기한</td>
+                <td>제출상태</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>test</td>
+                <td>test</td>
+                <td>
+                    <button class="btn btn-default btn-sm">업로드</button>
+                    <button class="btn btn-default btn-sm">수정</button>
+                </td>
+            </tr>
+            <tr>
+                <td>test</td>
+                <td>test</td>
+                <td>
+                    <h6>제출</h6>
+                </td>
+            </tr>
+            <tr>
+                <td>test</td>
+                <td>test</td>
+                <td>
+                    <h6>미제출</h6>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

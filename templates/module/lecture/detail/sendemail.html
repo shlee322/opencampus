@@ -1,0 +1,25 @@
+오픈캠퍼스를 이용해주셔서 감사합니다.
+
+본 메일은 오픈캠퍼스 강의 관리자 인증 메일입니다.
+
+다음 강의에 관리자 인증 요청을 하였으며 본인의 요청이 아닌 경우 회신 부탁드립니다.
+
+------------------------------------------------------------
+개설 학기 : {{ lecture.year }}년 {{ lecture.get_term_text() }}학기
+과목 코드	: {{ lecture.code }}
+과목 이름 : {{ lecture.subject_name }}
+인증 요청 ID : {{ session.get_account().account_id }}
+해당 강의 URL : {{ url_for('campus.lecture_detail', year=lecture.year, term=lecture.get_term_str(), code=lecture.code) }}
+------------------------------------------------------------
+
+본인이 맞는 경우 다음 링크를 클릭하시어 인증완료를 해주시기 바랍니다
+
+{{ url_for('campus.lecture_auth_admin_method_cb', year=lecture.year, term=lecture.get_term_str(), code=lecture.code, auth_code=auth_code) }}
+
+
+감사합니다.
+
+
+------------------------------
+오픈캠퍼스
+https://opencampus.kr

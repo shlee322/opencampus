@@ -1,0 +1,82 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail/board.css', version=1) }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+{% endblock %}
+
+{% block detail_content %}
+    <div class="panel panel-default article-box">
+        <div class="panel-heading">
+            <h3>글 제목은 여기에 씁니다.</h3>
+            <h5>정진호</h5>&nbsp;<abbr>2014년 1월 1일</abbr>
+        </div>
+        <div class="panel-body">
+            <div id="article_content">
+                <p>글 내용은 이곳에 들어옵니다.</p>
+            </div>
+            <div class="panel panel-default homework-panel">
+                <div class="panel-heading">
+                    <p>과제 마감 기한은</p>
+                    <h4>2014년 1월 1일</h4>
+                    <p>까지입니다.</p>
+                </div>
+                <div class="panel-body">
+                    <h1 id="upload_is_completed" class="hidden">업로드가 완료되었습니다.</h1>
+                    <div id="upload_in_progress" class="progress">
+                        <div class="progress-bar" style="width:0%;">60% Completed</div>
+                    </div>
+                    <button id="upload_btn" type="button" class="btn btn-primary btn-lg">Upload</button>
+                </div>
+            </div>
+            <hr>
+            <div class="panel panel-default article-comment">
+                <div class="panel-body">
+                    <div class="comment-header">
+                        <h5>이상혁</h5>
+                        <abbr>2014년 1월 1일</abbr>
+                    </div>
+                    <div class="comment-body">
+                        <p>댓글 내용은 이런 형식으로 들어갈 것입니다.</p>
+                    </div>
+                    <div class="comment-addon">
+                        <button type="button" class="btn btn-warning btn-sm">수정</button>
+                        <button type="button" class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default article-comment">
+                <div class="panel-body">
+                    <div class="comment-header">
+                        <h5>이상혁</h5>
+                        <abbr>2014년 1월 1일</abbr>
+                    </div>
+                    <div class="comment-body">
+                        <p>댓글 내용은 이런 형식으로 들어갈 것입니다.</p>
+                    </div>
+                    <div class="comment-addon">
+                        <button type="button" class="btn btn-warning btn-sm">수정</button>
+                        <button type="button" class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="댓글 입력...">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-lg">입력</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="board_control_btn_group" class="btn-group btn-group-sm">
+        <button class="btn btn-default btn-sm">&lt;&lt;이전</button>
+        <button class="btn btn-default btn-sm">목록</button>
+        <button class="btn btn-default btn-sm">다음&gt;&gt;</button>
+    </div>
+{% endblock %}

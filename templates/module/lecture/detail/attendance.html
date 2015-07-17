@@ -1,0 +1,110 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail/attendance.css', version=1) }}">
+{% endblock %}
+
+{% block detail_content %}
+<div class="container">
+    <h1>참석인원/전체인원 : 10/30</h1>
+    <div class="attendee-table">
+        <div class="row panel panel-default">
+            <div class="cell">
+                <h3>학번</h3>
+            </div>
+            <div class="cell">
+                <h3>이름</h3>
+            </div>
+            <div class="cell">
+                <h3>IP</h3>
+            </div>
+            <div class="cell">
+                <h3>응답시간</h3>
+            </div>
+        </div>
+        <div id="attendee_201411316" href="#" class="row panel panel-default">
+            <div class="cell">
+                <p>201411316</p>
+            </div>
+            <div class="cell">
+                <p>정진호</p>
+            </div>
+            <div class="cell">
+                <p>203.252.180.36</p>
+            </div>
+            <div class="cell">
+                <p>3ms</p>
+            </div>
+        </div>
+        <div id="attendee_201411317" href="#" class="row panel panel-default">
+            <div class="cell">
+                <p>201411316</p>
+            </div>
+            <div class="cell">
+                <p>정진호</p>
+            </div>
+            <div class="cell">
+                <p>203.252.180.36</p>
+            </div>
+            <div class="cell">
+                <p>3ms</p>
+            </div>
+        </div>
+        <div id="attendee_201411318" href="#" class="row panel panel-default present">
+            <div class="cell">
+                <p>201411316</p>
+            </div>
+            <div class="cell">
+                <p>정진호</p>
+            </div>
+            <div class="cell">
+                <p>203.252.180.36</p>
+            </div>
+            <div class="cell">
+                <p>3ms</p>
+            </div>
+        </div>
+        <div id="attendee_201411319" href="#" class="row panel panel-default absent">
+            <div class="cell">
+                <p>201411316</p>
+            </div>
+            <div class="cell">
+                <p>정진호</p>
+            </div>
+            <div class="cell">
+                <p>203.252.180.36</p>
+            </div>
+            <div class="cell">
+                <p>3ms</p>
+            </div>
+        </div>
+        <div id="attendee_20141130" href="#" class="row panel panel-default">
+            <div class="cell">
+                <p>201411316</p>
+            </div>
+            <div class="cell">
+                <p>정진호</p>
+            </div>
+            <div class="cell">
+                <p>203.252.180.36</p>
+            </div>
+            <div class="cell">
+                <p>3ms</p>
+            </div>
+         </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script>
+    $(function () {
+        $('#attendee_201411316').click(function () {
+            $('#attendee_201411316').addClass('present');
+            $('#attendee_201411316').removeClass('absent');
+        });
+    });
+    </script>
+{% endblock %}

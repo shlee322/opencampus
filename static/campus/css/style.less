@@ -1,0 +1,346 @@
+@sidebar-width: 150px;
+@sidebar-color: #eee;
+@opencampus-logo-color: #4caf50;
+@opencampus-logo-box-width: @sidebar-width;
+@opencampus-logo-box-height: @userbar-height;
+@opencampus-logo-width: 70px;
+@opencampus-logo-height: 44px;
+@userbar-height: 80px;
+@userbar-mobile-height: 50px;
+@footer-color: #4caf50;
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+html, body, abbr, a, h1, h2, h3, h4, h5, h6, div, p {
+  font-family: "Jeju Gothic", sans-serif;
+  font-weight: 400;
+}
+
+html, body {
+  font-size: 14px;
+  overflow-x: hidden;
+  -ms-overflow-x: hidden;
+}
+
+.opencampus-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: @opencampus-logo-box-width;
+  height: @opencampus-logo-box-height;
+  padding: 0;
+  background-color: @opencampus-logo-color;
+  text-align: center;
+  cursor: pointer;
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -(@opencampus-logo-height / 2);
+    margin-left: -(@opencampus-logo-width / 2);
+    width: @opencampus-logo-width;
+    height: @opencampus-logo-height;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  top: @opencampus-logo-box-height;
+  left: 0;
+  width: @sidebar-width;
+  height: 100%;
+  overflow-y: visible;
+  .main-sidebar {
+    background-color: @sidebar-color;
+    a {
+      color: #333333;
+      text-decoration: none;
+      font-size: 110%;
+      font-weight: 600;
+      &:hover, &:focus {
+        background-color: (@sidebar-color - #222);
+        color: white;
+        font-weight: 800;
+      }
+      &:active {
+        background-color: (@sidebar-color - #333);
+        color: white;
+        font-weight: 800;
+      }
+    }
+  }
+  .main-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @sidebar-width;
+    height: 100%;
+  }
+  .sub-sidebar {
+    background-color: (@sidebar-color - #222);
+    color: white;
+  }
+  /*
+  .sub-sidebar-lecture, .sub-sidebar-community {
+    position: absolute;
+    top: 0;
+    left: @sidebar-width;
+    width: @sidebar-width;
+    height: 100%;
+  } */
+}
+
+.userbar {
+  z-index: 990;
+  position: fixed;
+  top: 0;
+  left: @sidebar-width;
+  width: 100%;
+  height: @userbar-height;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  .show-menu-mobile {
+    display: none;
+  }
+  .campus-name {
+    position: relative;
+    left: 2%;
+    * {
+      display: inline-block;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      margin-left: 1%;
+      color: #777;
+    }
+  }
+  .user-btn {
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    margin-top: -30px;
+
+    text-decoration: none;
+    display: table;
+    * {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    img {
+      width: (@userbar-height - 20%);
+      height: (@userbar-height - 20%);
+    }
+    h4 {
+      color: #777;
+      padding: 0 5%;
+      white-space: nowrap;
+    }
+    /*position: absolute;
+    top: 0;
+    right: 30%;
+    width: @userbar-height;
+    height: @userbar-height;
+    padding: 0;
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -50%;
+      margin-top: -50%;
+      width: (@userbar-height);
+      height: (@userbar-height);
+      cursor: pointer;
+    }
+    .user-nickname {
+      position: relative;
+    } */
+    /*
+    .user-login-content, .user-profile-content {
+      display: none;
+      position: absolute;
+      top: @userbar-height;
+      right: 0;
+      width: 300px;
+      min-height: 200px;
+      padding: auto;
+      z-index: 998;
+      background: white;
+      box-shadow: 0 2px 2px -1px rgba(0, 0, 0, .9);
+      border-radius: 5px 0 3px 5px;
+      a, button {
+        width: 100%;
+      }
+    }
+    .user-profile-content {
+      text-align: center;
+      .user-profile-image-sm {
+        margin: 2% auto 2% auto;
+        width: 100px;
+        height: 100px;
+        img {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          margin-left: -100px;
+        }
+      }
+      .btn {
+        width: 30%;
+        display: inline-block;
+      }
+    }
+    */
+  }
+}
+
+.main-view {
+  position: absolute;
+  top: 0;
+  left: @sidebar-width;
+
+
+  .main-content {
+    margin-top: (@userbar-height + 10px);
+  }
+  .opencampus-footer {
+    margin-top: 50px;
+    border-top: 1px solid #ccc;
+    height: 180px;
+    width: 100%;
+    .row {
+      width: 80%;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      #footer-sites {
+        text-align: justify;
+      }
+      .footer-link {
+        color: #333;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .opencampus-logo {
+    display: none;
+  }
+
+  .sidebar {
+    z-index: 1300;
+    display: none;
+    width: 100%;
+    top: @userbar-mobile-height;
+    .main-sidebar {
+      width: 100%;
+      height: auto;
+      background-color: @opencampus-logo-color;
+
+      a {
+        color: #eee;
+        text-decoration: none;
+        font-size: 110%;
+        font-weight: 600;
+        &:hover {
+          background-color: (@opencampus-logo-color - #222);
+          color: #ccc;
+          font-weight: 800;
+        }
+        &:active {
+          background-color: (@opencampus-logo-color - #333);
+          color: #ccc;
+          font-weight: 800;
+        }
+      }
+      .sub-sidebar {
+        background-color: (@opencampus-logo-color - #222);
+        color: #eee;
+      }
+    }
+  }
+
+  .userbar {
+    width: 100%;
+    height: @userbar-mobile-height;
+    top: 0;
+    left: 0;
+    background-color: @opencampus-logo-color;
+    border: none;
+    .show-menu-mobile {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-top: 1%;
+      a {
+        color: #eee;
+        h1 { margin: 0; }
+      }
+    }
+    .campus-name {
+      display: inline-block;
+      position: relative;
+      top: 0;
+      left: 50%;
+      height: @userbar-mobile-height;
+      margin-top: -10px;
+      h1 {
+        margin-left: -30%;
+
+        font-size: 200%;
+      }
+      h1, p {
+        color: #eee;
+      }
+    }
+    .user-btn {
+      display: none;
+    }
+  }
+
+  .main-view {
+    position: static;
+    width: 100%;
+    .main-content {
+      &:after {
+        content: "";
+        display: block;
+        height: 160px;
+      }
+
+    }
+    .opencampus-footer {
+      border-top: 1px solid #ccc;
+      height: 400px;
+      align-content: center;
+      -webkit-align-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .userbar {
+    .show-menu-mobile {
+      margin-left: 5%;
+    }
+    .campus-name {
+      h1 {
+        margin-left: -48%;
+      }
+      p {
+        display: none;
+      }
+    }
+  }
+}

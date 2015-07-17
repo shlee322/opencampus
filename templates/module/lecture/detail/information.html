@@ -1,0 +1,118 @@
+{% extends 'module/lecture/detail/detail_layout.html' %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='campus/css/lecture/detail/information.css', version=1) }}">
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="https://apis.daum.net/maps/maps3.js?apikey={{ config.DAUM_MAP_API_KEY }}"></script>
+    <script type="text/javascript">
+        var map = new daum.maps.Map(document.getElementById('map_view'), {
+            center: new daum.maps.LatLng(37.54699, 127.09598),
+            level: 5
+        });
+
+        {% for place in places %}
+            var marker = new daum.maps.Marker({
+                position: new daum.maps.LatLng({{ place.location[0] }}, {{ place.location[1] }})
+            });
+            marker.setMap(map);
+        {% endfor %}
+
+        {% if places | count > 0 %}
+        map.setCenter(new daum.maps.LatLng({{ places[0].location[0] }}, {{ places[0].location[1] }}));
+        {% endif %}
+    </script>
+{% endblock %}
+{% block detail_content %}
+    <div class="container">
+        <div class="row information-row">
+            <div class="col-md-6 col-lg-6">
+
+                <h1>개요</h1>
+
+                <table id="lecture_info_table" class="table info-table">
+                    <tr>
+                        <td class="lecture-info-key">개설학기</td>
+                        <td>{{ lecture.year }}년 {{ lecture.get_term_text() }}학기</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">과목코드</td>
+                        <td>{{ lecture.code }}</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">타입</td>
+                        <td>{{ lecture.type }}</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">담당교수</td>
+                        <td>{{ ', '.join(lecture.professors) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">학점</td>
+                        <td>{{ lecture.credit }}학점</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">수강학과</td>
+                        <td>{{ ', '.join(lecture.departments) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="lecture-info-key">시간</td>
+                        <td>{{ lecture.timetable_text }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <h1>강의실 위치</h1>
+                <div id="map_view" class="map-view" style="width:300px;height:300px;">
+                </div>
+            </div>
+        </div>
+        <div class="row information-row">
+            <div class="col-md-6">
+                <div class="panel panel-default recent-article">
+                    <div class="panel-heading">
+                        <h3>최근 게시물</h3>
+                    </div>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default recent-article">
+                    <div class="panel-heading">
+                        <h3>최근 과제</h3>
+                    </div>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading">test string</h4>
+                            <abbr>3년 전</abbr>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

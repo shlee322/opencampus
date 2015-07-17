@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js', version=2) }}"></script>
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+        html, body, a, h1, h2, h3, h4, h5, h6, abbr, div, p {
+            font-family: "Jeju Gothic", sans-serif;
+        }
+        body {
+            padding-top: 50px;
+        }
+    </style>
+{% endblock %}
+{% block title %}오픈캠퍼스{% endblock %}
+{% block body %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">OpenCampus</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <!-- main area -->
+            <article>
+                {% if error_code == 404 %}
+                    <h1>존재하지 않는 페이지</h1>
+                    <p>서비스 이용에 불편을 드려서 죄송합니다. 현재 접속하신 페이지는 존재하지 않는 페이지이거나 삭제된 페이지입니다.</p>
+                {% elif error_code == 403 %}
+                    <h1>권한이 없습니다</h1>
+                    <p>서비스 이용에 불편을 드려서 죄송합니다. 해당 요청을 수행할 권한이 없습니다. 로그인 상태를 확인하시고 관리자에게 문의하여 주십시오.</p>
+                {% else %}
+                    <h1>아이쿠! 무엇인가 잘못되었습니다</h1>
+                    <p>서비스 이용에 불편을 드려서 죄송합니다. 확인 후 수정하도록 하겠습니다.</p>
+                {% endif %}
+                <button type="button" class="btn btn-danger" onclick="history.back()">이전 페이지로 이동</button>
+            </article>
+        </div>
+        <p class="text-right"><a href="#top">맨 위로</a></p>
+        <hr>
+        {% include "footer.html" %}
+    </div>
+{% endblock %}

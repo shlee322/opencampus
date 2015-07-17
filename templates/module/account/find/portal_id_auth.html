@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="panel panel-default join-panel">
+        <div class="panel-heading">
+            <h1>아이디/비밀번호 찾기</h1>
+        </div>
+        <div class="panel-body">
+            <h2>포탈 ID 인증</h2>
+            <h4>포탈 ID와 비밀번호를 입력해주시기 바랍니다.</h4>
+
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input name="portal_id" type="text" class="form-control" placeholder="아이디">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                <input name="portal_pw" type="password" class="form-control" placeholder="비밀번호">
+            </div>
+            <button id="auth_portal_next_btn" onclick="authPortal()"
+                    type="button" class="btn btn-primary btn-lg">다음
+            </button>
+        </div>
+        <div class="panel-footer">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td class="active"></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

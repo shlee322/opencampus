@@ -1,0 +1,43 @@
+.top-menu-content {
+  margin-bottom: 15px;
+}
+.top-menu-content * {
+  display: inline;
+}
+.top-menu-content h4 {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.nav-menu {
+  display: block;
+  margin-bottom: 15px;
+}
+.nav-menu li {
+  font-size: 120%;
+}
+.nav-menu li a {
+  color: #333;
+  text-decoration: none;
+}
+#auth_phase_one,
+#auth_phase_two,
+#auth_phase_three {
+  width: 60%;
+}
+#auth_phase_one .panel-body {
+  text-align: center;
+}
+#auth_phase_two .panel-body {
+  text-align: center;
+}
+#auth_phase_two .panel-body input,
+#auth_phase_two .panel-body abbr {
+  display: inline;
+}
+#auth_phase_two .panel-body input {
+  width: 80%;
+}
+#auth_phase_two .panel-body button {
+  margin: 5% auto 0 auto;
+  width: 50%;
+}

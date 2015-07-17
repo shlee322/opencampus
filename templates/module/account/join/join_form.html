@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="panel panel-default join-panel">
+        <div class="panel-heading">
+            <h1>회원가입</h1>
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <span class="input-group-addon">아이디</span>
+                <input id="account_id" value="{{ account_id }}" type="text" class="form-control" data-toggle="tooltip" data-placement="bottom" title="6~30자의 영문소문자, 숫자, -, _">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">비밀번호</span>
+                <input id="account_pw" value="{{ account_pw }}" type="password" class="form-control" data-toggle="tooltip" data-placement="bottom" title="영문, 숫자, 특수문자를 조합하여 8자리 이상이여야 하며 연속적인 숫자나 생일, 전화번호 등의 추측하기 쉬운 개인정보 및 아이디와 비슷한 비밀번호는 사용하지 말아주세요">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">비밀번호 확인</span>
+                <input id="account_pw_confirm" type="password" class="form-control">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">닉네임</span>
+                <input id="account_nick" value="{{ account_nick }}" type="text" class="form-control">
+            </div>
+            <button id="request_join_btn" onclick="request_join()" class="btn btn-primary btn-lg">완료</button>
+        </div>
+        {% if error %}
+        <div class="alert alert-warning" role="alert">{{ error }}</div>
+        {% endif %}
+        <div class="panel-footer">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="active"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // ref : https://gist.github.com/shlee322/548dc298661e94e3495e#file-check_password-js
+    function check_password(pwd) {
+        // Copyright (c) 2015 Lee Sahghyuck <shlee322@elab.kr>
+        // MIT License (http://opensource.org/licenses/mit-license.php)
+        // Author : Lee Sahghyuck <shlee322@elab.kr>
+        // Date   : 2015.02.17
+
+        var char_type = 0;
+        if (/[a-z]/.test(pwd)) char_type = char_type + 1;
+        if (/[A-Z]/.test(pwd)) char_type = char_type + 1;
+        if (/[0-9]/.test(pwd)) char_type = char_type + 1;
+        if (/[~!@#$%\^&*()_+`\-={}|[\]\\:";'<>?,./]/gi.test(pwd)) char_type = char_type + 1;
+
+        return !(char_type < 2 || (char_type == 2 && pwd.length < 10) || pwd.length < 8);
+    }
+
+    function request_join() {
+        if (!/^[a-z]/.test($('#account_id').val()) || !/^[a-z0-9_-]{6,30}$/.test($('#account_id').val())) {
+            alert('아이디는 6~30자의 영문소문자, 숫자, -, _로 이루어져야 하며 영문 소문자로 시작되어야 합니다.');
+            return;
+        }
+
+        if(!check_password($('#account_pw').val())) {
+            alert('비밀번호는 영문, 숫자, 특수문자를 조합하여 8자리 이상이여야합니다.');
+            return;
+        }
+
+        if($('#account_nick').val().length < 3 || $('#account_nick').val().length > 10) {
+            alert('닉네임은 3~10자로 지정하여야 합니다.');
+            return;
+        }
+
+        if($('#account_pw').val() != $('#account_pw_confirm').val()) {
+            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+            return;
+        }
+
+        $('#request_join_btn').text('가입 시도 중입니다...');
+        $('#request_join_btn').attr("disabled",true);
+
+        join_phase({
+            phase:'req_join',
+            portal_id: $('#portal_id').val(),
+            portal_pw: $('#portal_pw').val(),
+            account_id: $('#account_id').val(),
+            account_pw: $('#account_pw').val(),
+            account_nick: $('#account_nick').val()
+        });
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

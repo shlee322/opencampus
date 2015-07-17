@@ -1,0 +1,49 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+    {{ super() }}
+{% endblock %}
+{% block js %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 col-md-2">
+                <button class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;항목 작성
+                </button>
+            </div>
+            <div class="col-sm-8 col-md-8">
+
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="위키 검색...">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2>일감호</h2>
+                        <abbr>2일 전 마지막으로 수정</abbr>
+                        <button class="btn btn-default btn-xs pull-right">수정</button>
+                    </div>
+                    <div class="panel-body">
+                        {% block wiki_content %}
+                            <p>testtestestestsets</p>
+                            <p>위키내용위말ㅇㄴㅁㄹㅈㅁ도기</p>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

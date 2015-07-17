@@ -1,0 +1,78 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='campus/css/user/style.css', version=1) }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript">
+        var authPortal = function () {
+
+            $('#auth_portal_next_btn').text('인증 시도 중 입니다...');
+            $('#auth_portal_next_btn').attr("disabled", true);
+
+            changeFindPhase({
+                phase: 'req_auth_portal',
+                portal_id: $('#portal_id').val(),
+                portal_pw: $('#portal_pw').val()
+            });
+
+        };
+
+        var makeNewPw = function () {
+            $('#make_new_pw_btn').text('비밀번호 생성 중입니다...');
+            $('#make_new_pw_btn').attr('disabled', true);
+
+
+            // TODO : 비밀번호 다시 입력할 수 있게 만들어주세요!
+
+            alert('이 기능은 지원하지 않습니다!');
+            window.location.href = '/';
+        };
+
+        var changeFindPhase = function (data) {
+            console.log('continue to ' + data.phase);
+
+            data.csrf_token =  '{{ csrf_token() }}';
+
+            $.post("{{ url_for('campus.account_find') }}", data, function (data) {
+                $("#find_content").html(data);
+            });
+        };
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="find_content">
+        <div class="container">
+            <div class="panel panel-default join-panel">
+                <div class="panel-heading">
+                    <h1>아이디/비밀번호 찾기</h1>
+                </div>
+                <div class="panel-body">
+                    <h3>작업을 계속하기 위하여 인증을 진행해주시기 바랍니다.</h3>
+                    <a href="javascript:changeFindPhase({phase:'portal_id'})" class="btn panel panel-default btn-panel">
+                        <h2>포탈 ID 인증</h2>
+
+                        <p>재학생, 교직원 사용 가능</p>
+                    </a>
+                    <a href="javascript:changeFindPhase({phase:'email'})" class="btn panel panel-default btn-panel">
+                        <h2>이메일 인증</h2>
+
+                        <p>포탈 ID가 기억나지 않는 경우</p>
+                    </a>
+                </div>
+                <div class="panel-footer">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="active"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

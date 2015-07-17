@@ -1,0 +1,19 @@
+.user-action-menu {
+  margin-top: 30px;
+}
+.user-action-menu * {
+  margin-left: 50px;
+  display: inline-block;
+}
+.nav-menu {
+  display: block;
+  margin-top: 5%;
+  margin-bottom: 3%;
+}
+.nav-menu li {
+  font-size: 120%;
+}
+.nav-menu li a {
+  color: #333;
+  text-decoration: none;
+}

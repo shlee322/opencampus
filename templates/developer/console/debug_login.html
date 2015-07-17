@@ -1,0 +1,6 @@
+디버깅 모드입니다. OAuth를 사용하시지 않고 로그인 하실 수 있습니다.
+<form action="{{ url_for('console.login_cb') }}" method="GET">
+    <input type="email" name="email" value="debug@opencampus.kr"></input>
+    <button type="submit">로그인</button>
+</form>
+<a href="{{ url_for('console.login') }}?debug_use_oauth=1">OAuth 사용</a>

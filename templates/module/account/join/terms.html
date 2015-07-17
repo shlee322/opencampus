@@ -1,0 +1,69 @@
+{% extends 'campus/layout.html' %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='campus/css/user/style.css', version=2) }}">
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script type="text/javascript">
+    function agree_terms() {
+        var terms = $("input[id=terms]").is(":checked");
+        var privacy_policy = $("input[id=privacy_policy]").is(":checked");
+        if(!terms) {
+            alert("이용약관에 동의하셔야 합니다.");
+            return;
+        }
+        if(!privacy_policy) {
+            alert("개인정보취급방침에 동의하셔야 합니다.");
+            return;
+        }
+
+        if(!terms || !privacy_policy) return;
+
+        join_phase({phase:'choice_auth'});
+    }
+
+    function join_phase(data) {
+        data.csrf_token = '{{ csrf_token() }}';
+        $.post( "{{ url_for('campus.account_join') }}", data, function( data ) {
+            $("#join_content").html(data);
+        });
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="join_content">
+    <div class="container">
+        <div class="panel panel-default join-panel">
+            <div class="panel-heading">
+                <h1>회원가입</h1>
+            </div>
+            <div class="panel-body">
+                <div class="agreement-section">
+                    <h3>1. 이용약관</h3>
+                    <textarea class="form-control" rows="5">{{ terms }}</textarea>
+                    <label class="pull-right"><input id="terms" type="checkbox">이용약관에 동의합니다.</label>
+                </div>
+                <div class="agreement-section">
+                    <h3>2. 개인정보취급방침</h3>
+                    <textarea class="form-control" rows="5">{{ privacy_policy }}</textarea>
+                    <label class="pull-right"><input id="privacy_policy" type="checkbox">개인정보취급방침에 동의합니다.</label>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" onclick="agree_terms()">다음</button>
+            </div>
+            <div class="panel-footer">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="active"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
