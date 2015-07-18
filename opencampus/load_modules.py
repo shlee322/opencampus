@@ -20,6 +20,7 @@ MODULE_NAMES = [
     'opencampus.common.db',
     'opencampus.common.session',
     'opencampus.common.csrf',
+    'opencampus.endpoint.home',
     'opencampus.endpoint.static',
     'opencampus.endpoint.developer.views',
     'opencampus.endpoint.developer.console.blueprint',

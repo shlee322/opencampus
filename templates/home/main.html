@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js', version=2) }}"></script>
+    <script type="text/javascript">
+        function change_campus(select) {
+            var url = $(select).val();
+            $('#campus_link').attr('href', 'https://' + url);
+        }
+    </script>
+{% endblock %}
 {% block css %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ static('3/campus/body.css') }}">
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+        html, body, a, h1, h2, h3, h4, h5, h6, abbr, div, p {
+            font-family: "Jeju Gothic", sans-serif;
+        }
+        body {
+            padding-top: 50px;
+        }
+    </style>
 {% endblock %}
+{% block title %}오픈캠퍼스{% endblock %}
 {% block body %}
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="/">OpenCampus</a>
             </div>
         </div>
@@ -22,22 +35,27 @@
         <div class="row">
             <!-- main area -->
             <article class="col-md-offset-4 col-md-4">
-                <h1 class="text-center">Open Campus</h1>
+                <h1 class="text-center">OpenCampus</h1>
 
                 <p class="lead text-center">우리 학교의 정보를 한눈에!</p>
 
                 <form>
                     <div class="form-group">
-                        <select class="form-control">
-                            <option>건국대학교</option>
+                        <select class="form-control" onchange="change_campus(this)">
+                            <option selected>대학교 선택</option>
+                            {% for campus in campuses %}
+                                {% if not campus.domain.endswith('.dev') %}
+                                    <option value="{{ campus.domain }}">{{ campus.univ_name }}{{ campus.univ_type }} {{ campus.campus_name }}캠퍼스</option>
+                                {% endif %}
+                            {% endfor %}
                         </select>
                     </div>
-                    <a href="https://ku.opencampus.kr" class="btn btn-lg btn-primary btn-block" role="button">접속하기</a>
+                    <a id="campus_link" href="#" class="btn btn-lg btn-primary btn-block" role="button">접속하기</a>
                 </form>
             </article>
         </div>
         <p class="text-right"><a href="#top">맨 위로</a></p>
         <hr>
-        {% include "campus/footer.html" %}
+        {% include "footer.html" %}
     </div>
 {% endblock %}

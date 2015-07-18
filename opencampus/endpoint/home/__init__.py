@@ -13,3 +13,13 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from flask import render_template
+from opencampus.common.models import Campus
+from opencampus.server import app
+
+
+@app.route('/')
+def home_main():
+    campuses = Campus.objects.all()
+    return render_template('home/main.html', campuses=campuses)
