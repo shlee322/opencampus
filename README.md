@@ -54,6 +54,7 @@ OpenCampus 프로젝트를 실행하기 위하여 다음과 같은 프로그램�
 + python3
 + mongodb
 + redis
++ elasticsearch
 
 먼저 opencampus 프로젝트의 최상위 폴더에 다음과 같이 입력하여 Python 의존성 라이브러리를 설치하여 줍니다.
 
@@ -74,15 +75,14 @@ bower install
 ```
 127.0.0.1   opencampus.dev
 127.0.0.1   apis.opencampus.dev
-127.0.0.1   test.opencampus.dev
 127.0.0.1   developers.opencampus.dev
-127.0.0.1   mongodb.opencampus.dev
-127.0.0.1   redis.opencampus.dev
+127.0.0.1   test.opencampus.dev
 ```
 
 ### Create Campus
 
-`http://developers.opencampus.kr:8080/console`에 접속하여 캠퍼스를 추가합니다.
+`http://developers.opencampus.dev:5000/console`에 접속하여 캠퍼스를 추가합니다.
 
-캠퍼스를 추가하면 `http://test.opencampus.kr:8080`를 통하여 테스트 캠퍼스를 볼 수 있습니다.
+캠퍼스 추가 후 해당 캠퍼스를 클릭하여 Domain에 `test.opencampus.dev:5000`를 입력후 저장 버튼을 클릭합니다.
 
+캠퍼스를 추가하면 `http://test.opencampus.dev:5000`를 통하여 테스트 캠퍼스를 볼 수 있습니다.
