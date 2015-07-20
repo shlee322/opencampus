@@ -59,7 +59,13 @@ OpenCampus 프로젝트를 실행하기 위하여 다음과 같은 프로그램�
 먼저 opencampus 프로젝트의 최상위 폴더에 다음과 같이 입력하여 Python 의존성 라이브러리를 설치하여 줍니다.
 
 ```
-pip3 install -r requirements.txt
+pip3 install -r requirements/requirements.txt
+```
+
+추가로 문서 자동화 도구인 sphinx를 설치하고자 할 경우 다음과 같이 입력합니다.
+
+```
+pip3 install -r requirements/sphinx.txt
 ```
 
 다음, static 폴더로 들어가 HTML, CSS, JavaScript 의존성 라이브러리를 설치하여 줍니다.
