@@ -295,6 +295,23 @@ function init() {
     $('#timetable_generator_pre_btn').click(timetable_generator_pre_btn_click);
     $('#timetable_generator_next_btn').click(timetable_generator_next_btn_click);
 
+    $(document).keydown(function(event) {
+        if($(event.target).is('input')) {
+            return;
+        }
+
+        switch(event.which) {
+        case 72: // 'h'
+        case 37: // left arrow key
+            $('#timetable_generator_pre_btn').click();
+            break;
+        case 76: // 'l'
+        case 39: // right arrow key
+            $('#timetable_generator_next_btn').click();
+            break;
+        }
+    });
+
     detail_lecture_info(null);
 }
 
