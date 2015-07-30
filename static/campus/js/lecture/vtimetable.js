@@ -260,6 +260,21 @@ function init() {
     $('#timetable_generator_generate_btn').click(generate_timetable);
     $('#timetable_generator_pre_btn').click(timetable_generator_pre_btn_click);
     $('#timetable_generator_next_btn').click(timetable_generator_next_btn_click);
+    $(document).keydown(function (event) {
+        if ($(event.target).is('input')) {
+            return;
+        }
+        switch (event.which) {
+            case 72: // 'h'
+            case 37:
+                $('#timetable_generator_pre_btn').click();
+                break;
+            case 76: // 'l'
+            case 39:
+                $('#timetable_generator_next_btn').click();
+                break;
+        }
+    });
     detail_lecture_info(null);
 }
 function generate_timetable() {
@@ -448,4 +463,3 @@ $(function () {
             </div>');
     }
 });
-//# sourceMappingURL=vtimetable.js.map
